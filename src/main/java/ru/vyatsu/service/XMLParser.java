@@ -1,6 +1,7 @@
 package ru.vyatsu.service;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import ru.vyatsu.service.structure.CarXML;
 
 public class XMLParser implements Parser {
     @Override

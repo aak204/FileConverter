@@ -1,6 +1,7 @@
 package ru.vyatsu.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.vyatsu.service.structure.Brand;
 
 public class JSONParser implements Parser {
     @Override
