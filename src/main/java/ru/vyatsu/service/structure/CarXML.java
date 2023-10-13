@@ -1,6 +1,14 @@
 package ru.vyatsu.service.structure;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 public class CarXML {
+    @JacksonXmlProperty(isAttribute = true)
+    private int id;
+
+    @JacksonXmlProperty(isAttribute = true)
+    private String type;
+
     private String brand;
     private String model;
     private String year;
@@ -8,6 +16,10 @@ public class CarXML {
     private String color;
 
     // Геттеры и сеттеры
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
     public String getBrand() { return brand; }
     public void setBrand(String brand) { this.brand = brand; }
     public String getModel() { return model; }
