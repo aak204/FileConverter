@@ -1,1 +1,115 @@
-[{"name":"Volkswagen","cars":[{"model":"Golf","year":"2020","color":"серый","engine":{"type":"дизель","volume":"2.0","power":"150"}}]},{"name":"Volvo","cars":[{"model":"V90","year":"2021","color":"синий","engine":{"type":"бензин","volume":"2.0","power":"250"}}]},{"name":"Toyota","cars":[{"model":"Land Cruiser","year":"2021","color":"черный","engine":{"type":"дизель","volume":"4.5","power":"270"}}]},{"name":"Audi","cars":[{"model":"A6","year":"2019","color":"белый","engine":{"type":"бензин","volume":"3.0","power":"340"}}]},{"name":"Porsche","cars":[{"model":"Boxster","year":"2022","color":"желтый","engine":{"type":"бензин","volume":"2.5","power":"365"}}]},{"name":"Mercedes-Benz","cars":[{"model":"CLS 400","year":"2022","color":"синий","engine":{"type":"бензин","volume":"3.5","power":"330"}}]},{"name":"Ford","cars":[{"model":"Ranger","year":"2023","color":"черный","engine":{"type":"дизель","volume":"3.2","power":"200"}}]},{"name":"BMW","cars":[{"model":"M3","year":"2020","color":"красный","engine":{"type":"бензин","volume":"3.0","power":"450"}}]}]
+{
+  "brands" : [ {
+    "brand" : {
+      "name" : "BMW",
+      "cars" : [ {
+        "model" : "M3",
+        "year" : "2020",
+        "color" : "красный",
+        "engine" : {
+          "type" : "бензин",
+          "volume" : "3.0",
+          "power" : "450"
+        }
+      } ]
+    }
+  }, {
+    "brand" : {
+      "name" : "Toyota",
+      "cars" : [ {
+        "model" : "Land Cruiser",
+        "year" : "2021",
+        "color" : "черный",
+        "engine" : {
+          "type" : "дизель",
+          "volume" : "4.5",
+          "power" : "270"
+        }
+      } ]
+    }
+  }, {
+    "brand" : {
+      "name" : "Mercedes-Benz",
+      "cars" : [ {
+        "model" : "CLS 400",
+        "year" : "2022",
+        "color" : "синий",
+        "engine" : {
+          "type" : "бензин",
+          "volume" : "3.5",
+          "power" : "330"
+        }
+      } ]
+    }
+  }, {
+    "brand" : {
+      "name" : "Audi",
+      "cars" : [ {
+        "model" : "A6",
+        "year" : "2019",
+        "color" : "белый",
+        "engine" : {
+          "type" : "бензин",
+          "volume" : "3.0",
+          "power" : "340"
+        }
+      } ]
+    }
+  }, {
+    "brand" : {
+      "name" : "Volkswagen",
+      "cars" : [ {
+        "model" : "Golf",
+        "year" : "2020",
+        "color" : "серый",
+        "engine" : {
+          "type" : "дизель",
+          "volume" : "2.0",
+          "power" : "150"
+        }
+      } ]
+    }
+  }, {
+    "brand" : {
+      "name" : "Porsche",
+      "cars" : [ {
+        "model" : "Boxster",
+        "year" : "2022",
+        "color" : "желтый",
+        "engine" : {
+          "type" : "бензин",
+          "volume" : "2.5",
+          "power" : "365"
+        }
+      } ]
+    }
+  }, {
+    "brand" : {
+      "name" : "Volvo",
+      "cars" : [ {
+        "model" : "V90",
+        "year" : "2021",
+        "color" : "синий",
+        "engine" : {
+          "type" : "бензин",
+          "volume" : "2.0",
+          "power" : "250"
+        }
+      } ]
+    }
+  }, {
+    "brand" : {
+      "name" : "Ford",
+      "cars" : [ {
+        "model" : "Ranger",
+        "year" : "2023",
+        "color" : "черный",
+        "engine" : {
+          "type" : "дизель",
+          "volume" : "3.2",
+          "power" : "200"
+        }
+      } ]
+    }
+  } ]
+}

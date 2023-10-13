@@ -1,6 +1,6 @@
 package ru.vyatsu.service.structure;
 
-public class Engine {
+public class EngineXML {
     private String type;
     private String volume;
     private String power;

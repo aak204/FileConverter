@@ -1,25 +1,21 @@
 package ru.vyatsu.service.converters;
 
 import ru.vyatsu.service.structure.Brand;
-import ru.vyatsu.service.structure.Car;
+import ru.vyatsu.service.structure.CarJSON;
 import ru.vyatsu.service.structure.CarXML;
 import ru.vyatsu.service.structure.GarageXML;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class XMLtoJSONTransformer {
 
     public List<Brand> transform(GarageXML garageXML) {
-        Map<String, Brand> brandMap = new HashMap<>();
+        Map<String, Brand> brandMap = new LinkedHashMap<>();
 
         for(CarXML carXML : garageXML.getCars()) {
             Brand brand = brandMap.getOrDefault(carXML.getBrand(), new Brand());
             brand.setName(carXML.getBrand());
 
-            Car car = new Car();
+            CarJSON car = new CarJSON();
             car.setModel(carXML.getModel());
             car.setYear(carXML.getYear());
             car.setColor(carXML.getColor());

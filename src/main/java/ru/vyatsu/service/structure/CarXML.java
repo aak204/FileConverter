@@ -12,7 +12,7 @@ public class CarXML {
     private String brand;
     private String model;
     private String year;
-    private Engine engine;
+    private EngineXML engine;
     private String color;
 
     // Геттеры и сеттеры
@@ -26,8 +26,8 @@ public class CarXML {
     public void setModel(String model) { this.model = model; }
     public String getYear() { return year; }
     public void setYear(String year) { this.year = year; }
-    public Engine getEngine() { return engine; }
-    public void setEngine(Engine engine) { this.engine = engine; }
+    public EngineXML getEngine() { return engine; }
+    public void setEngine(EngineXML engine) { this.engine = engine; }
     public String getColor() { return color; }
     public void setColor(String color) { this.color = color; }
 }

@@ -1,10 +1,10 @@
 package ru.vyatsu.service.structure;
 
-public class Car {
+public class CarJSON {
     private String model;
     private String year;
     private String color;
-    private Engine engine;
+    private EngineXML engine;
 
     // Геттеры и сеттеры
     public String getModel() { return model; }
@@ -13,7 +13,7 @@ public class Car {
     public void setYear(String year) { this.year = year; }
     public String getColor() { return color; }
     public void setColor(String color) { this.color = color; }
-    public Engine getEngine() { return engine; }
-    public void setEngine(Engine engine) { this.engine = engine; }
+    public EngineXML getEngine() { return engine; }
+    public void setEngine(EngineXML engine) { this.engine = engine; }
 }
 

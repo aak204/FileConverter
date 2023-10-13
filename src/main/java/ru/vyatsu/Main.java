@@ -40,7 +40,7 @@ public class Main {
             brands.setBrands(brandWrappers);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            String jsonContent = objectMapper.writeValueAsString(brands);
+            String jsonContent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(brands);
 
             Path outputPath = Paths.get("new_data.json");
             Files.writeString(outputPath, jsonContent);
