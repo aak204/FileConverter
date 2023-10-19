@@ -2,6 +2,7 @@ package ru.vyatsu;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import ru.vyatsu.service.Parser;
 import ru.vyatsu.service.ParserFactory;
 import ru.vyatsu.service.converters.JSONtoXMLTransformer;
@@ -18,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 public class Main {
     public static void main(String[] args) throws IOException {
         String filePath = "src\\main\\resources\\data.xml";
@@ -51,6 +52,7 @@ public class Main {
             GarageXML garageForXML = transformerToXML.transform(brands); // brands здесь - это объект, представляющий JSON
 
             XmlMapper xmlMapper = new XmlMapper();
+            xmlMapper.configure( ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true );
             String resultXmlContent = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(garageForXML);
 
             Path xmlOutputPath = Paths.get("output_data.xml");

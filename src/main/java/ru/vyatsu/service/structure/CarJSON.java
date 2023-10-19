@@ -1,5 +1,8 @@
 package ru.vyatsu.service.structure;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"id", "type", "model", "year", "color", "engine"})
 public class CarJSON {
     private String model;
     private String year;

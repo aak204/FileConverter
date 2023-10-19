@@ -16,12 +16,12 @@ public class XMLtoJSONTransformer {
             brand.setName(carXML.getBrand());
 
             CarJSON car = new CarJSON();
+            car.setId(carXML.getId());
+            car.setType(carXML.getType());
             car.setModel(carXML.getModel());
             car.setYear(carXML.getYear());
             car.setColor(carXML.getColor());
             car.setEngine(carXML.getEngine());
-            car.setId(carXML.getId());
-            car.setType(carXML.getType());
 
             if(brand.getCars() == null) {
                 brand.setCars(new ArrayList<>());
