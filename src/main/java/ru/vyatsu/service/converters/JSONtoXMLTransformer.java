@@ -20,6 +20,8 @@ public class JSONtoXMLTransformer {
                 carXML.setYear(car.getYear());
                 carXML.setColor(car.getColor());
                 carXML.setEngine(car.getEngine());
+                carXML.setId(car.getId());
+                carXML.setType(car.getType());
 
                 carXMLList.add(carXML);
             }

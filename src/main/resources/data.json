@@ -1,13 +1,12 @@
 {
-   "brands": 
-   [
+   "brands": [
       {
-         "brand": 
-         {
+         "brand": {
             "name": "BMW",
-            "cars": 
-            [
+            "cars": [
                {
+                  "id": "0",
+                  "type": "спортивный",
                   "model":"M3",
                   "year": "2020",
                   "color": "красный",
@@ -21,12 +20,12 @@
          }
       },
       {
-         "brand": 
-         {
+         "brand": {
             "name": "Toyota",
-            "cars": 
-            [
+            "cars": [
                {
+                  "id": "1",
+                  "type": "внедорожник",
                   "model":"Land Cruiser",
                   "year": "2021",
                   "color": "черный",
@@ -40,12 +39,12 @@
          }
       },
       {
-         "brand": 
-         {
+         "brand": {
             "name": "Mercedes-Benz",
-            "cars": 
-            [
+            "cars": [
                {
+                  "id": "2",
+                  "type": "купе",
                   "model":"CLS 400",
                   "year": "2022",
                   "color": "синий",
@@ -59,12 +58,12 @@
          }
       },
       {
-         "brand": 
-         {
+         "brand": {
             "name": "Audi",
-            "cars": 
-            [
+            "cars": [
                {
+                  "id": "3",
+                  "type": "седан",
                   "model":"A6",
                   "year": "2019",
                   "color": "белый",
@@ -78,12 +77,12 @@
          }
       },
       {
-         "brand": 
-         {
+         "brand": {
             "name": "Volkswagen",
-            "cars": 
-            [
+            "cars": [
                {
+                  "id": "4",
+                  "type": "хэтчбек",
                   "model":"Golf",
                   "year": "2020",
                   "color": "серый",
@@ -97,12 +96,12 @@
          }
       },
       {
-         "brand": 
-         {
+         "brand": {
             "name": "Porsche",
-            "cars": 
-            [
+            "cars": [
                {
+                  "id": "5",
+                  "type": "кабриолет",
                   "model":"Boxster",
                   "year": "2022",
                   "color": "желтый",
@@ -116,12 +115,12 @@
          }
       },
       {
-         "brand": 
-         {
+         "brand": {
             "name": "Volvo",
-            "cars": 
-            [
+            "cars": [
                {
+                  "id": "6",
+                  "type": "универсал",
                   "model":"V90",
                   "year": "2021",
                   "color": "синий",
@@ -135,12 +134,12 @@
          }
       },
       {
-         "brand": 
-         {
+         "brand": {
             "name": "Ford",
-            "cars": 
-            [
+            "cars": [
                {
+                  "id": "7",
+                  "type": "пикап",
                   "model":"Ranger",
                   "year": "2023",
                   "color": "черный",

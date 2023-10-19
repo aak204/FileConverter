@@ -1,8 +1,10 @@
 package ru.vyatsu;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import ru.vyatsu.service.Parser;
 import ru.vyatsu.service.ParserFactory;
+import ru.vyatsu.service.converters.JSONtoXMLTransformer;
 import ru.vyatsu.service.converters.XMLtoJSONTransformer;
 import ru.vyatsu.service.structure.Brand;
 import ru.vyatsu.service.structure.BrandWrapper;
@@ -44,6 +46,15 @@ public class Main {
 
             Path outputPath = Paths.get("new_data.json");
             Files.writeString(outputPath, jsonContent);
+
+            JSONtoXMLTransformer transformerToXML = new JSONtoXMLTransformer();
+            GarageXML garageForXML = transformerToXML.transform(brands); // brands здесь - это объект, представляющий JSON
+
+            XmlMapper xmlMapper = new XmlMapper();
+            String resultXmlContent = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(garageForXML);
+
+            Path xmlOutputPath = Paths.get("output_data.xml");
+            Files.writeString(xmlOutputPath, resultXmlContent);
 
         } catch (Exception e) {
             e.printStackTrace();
