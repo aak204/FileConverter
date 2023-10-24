@@ -22,61 +22,86 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Нужно ввести минимум 2 аргумента: [input file path] [name output file]");
+            return;
         }
-        else {
-            String filePath = args[0];
-            String[] fileResolutionArg1 = args[0].split("\\.");
-            String[] fileResolutionArg2 = args[1].split("\\.");
-            String content = Files.readString(Paths.get(filePath), StandardCharsets.UTF_8);
-            if(fileResolutionArg1[1].equals("xml") && fileResolutionArg2[1].equals("json")){
-                try {
-                    Parser xmlParser = ParserFactory.createParser("XML");
-                    GarageXML garageXML = (GarageXML) xmlParser.parse(content);
 
-                    XMLtoJSONTransformer transformer = new XMLtoJSONTransformer();
-                    List<Brand> brandList = transformer.transform(garageXML);
+        String filePath = args[0];
+        String outputFile = args[1];
+        String content;
 
-                    // Обернуть список брендов
-                    List<BrandWrapper> brandWrappers = new ArrayList<>();
-                    for (Brand brand : brandList) {
-                        BrandWrapper brandWrapper = new BrandWrapper();
-                        brandWrapper.setBrand(brand);
-                        brandWrappers.add(brandWrapper);
-                    }
+        try {
+            content = Files.readString(Paths.get(filePath), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.out.println("Ошибка чтения файла: " + filePath);
+            e.printStackTrace();
+            return;
+        }
 
-                    Brands brands = new Brands();
-                    brands.setBrands(brandWrappers);
+        if (isXMLtoJSON(filePath, outputFile)) {
+            convertXMLtoJSON(content, outputFile);
+        } else if (isJSONtoXML(filePath, outputFile)) {
+            convertJSONtoXML(content, outputFile);
+        } else {
+            System.out.println("Неподдерживаемый формат файла или комбинация форматов");
+        }
+    }
 
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    String jsonContent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(brands);
+    private static boolean isXMLtoJSON(String inputFile, String outputFile) {
+        return inputFile.endsWith(".xml") && outputFile.endsWith(".json");
+    }
 
-                    Path outputPath = Paths.get(args[1]);
-                    Files.writeString(outputPath, jsonContent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    private static boolean isJSONtoXML(String inputFile, String outputFile) {
+        return inputFile.endsWith(".json") && outputFile.endsWith(".xml");
+    }
+
+    private static void convertXMLtoJSON(String content, String outputFile) {
+        try {
+            Parser xmlParser = ParserFactory.createParser("XML");
+            GarageXML garageXML = (GarageXML) xmlParser.parse(content);
+
+            XMLtoJSONTransformer transformer = new XMLtoJSONTransformer();
+            List<Brand> brandList = transformer.transform(garageXML);
+
+            List<BrandWrapper> brandWrappers = new ArrayList<>();
+            for (Brand brand : brandList) {
+                BrandWrapper brandWrapper = new BrandWrapper();
+                brandWrapper.setBrand(brand);
+                brandWrappers.add(brandWrapper);
             }
-            else if (fileResolutionArg1[1].equals("json") && fileResolutionArg2[1].equals("xml")) {
-                try{
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Brands brands = objectMapper.readValue(content, Brands.class);
-                    JSONtoXMLTransformer transformerToXML = new JSONtoXMLTransformer();
-                    GarageXML garageForXML = transformerToXML.transform(brands); // brands здесь - это объект, представляющий JSON
 
-                    XmlMapper xmlMapper = new XmlMapper();
-                    xmlMapper.configure( ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true );
-                    String resultXmlContent = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(garageForXML);
+            Brands brands = new Brands();
+            brands.setBrands(brandWrappers);
 
-                    Path xmlOutputPath = Paths.get(args[1]);
-                    Files.writeString(xmlOutputPath, resultXmlContent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonContent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(brands);
+
+            Path outputPath = Paths.get(outputFile);
+            Files.writeString(outputPath, jsonContent);
+        } catch (Exception e) {
+            System.out.println("Ошибка при конвертации XML в JSON");
+            e.printStackTrace();
+        }
+    }
+
+    private static void convertJSONtoXML(String content, String outputFile) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Brands brands = objectMapper.readValue(content, Brands.class);
+
+            JSONtoXMLTransformer transformerToXML = new JSONtoXMLTransformer();
+            GarageXML garageForXML = transformerToXML.transform(brands);
+
+            XmlMapper xmlMapper = new XmlMapper();
+            String resultXmlContent = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(garageForXML);
+
+            Path xmlOutputPath = Paths.get(outputFile);
+            Files.writeString(xmlOutputPath, resultXmlContent);
+        } catch (Exception e) {
+            System.out.println("Ошибка при конвертации JSON в XML");
+            e.printStackTrace();
         }
     }
 }
-
