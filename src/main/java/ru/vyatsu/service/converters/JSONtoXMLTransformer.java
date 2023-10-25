@@ -1,12 +1,13 @@
 package ru.vyatsu.service.converters;
 
+import ru.vyatsu.service.Transformer;
 import ru.vyatsu.service.structure.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONtoXMLTransformer {
-
+public class JSONtoXMLTransformer implements Transformer<Brands, GarageXML> {
+    @Override
     public GarageXML transform(Brands brandsJSON) {
         GarageXML garageXML = new GarageXML();
         List<CarXML> carXMLList = new ArrayList<>();

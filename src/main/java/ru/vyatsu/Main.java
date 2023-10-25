@@ -2,9 +2,7 @@ package ru.vyatsu;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
-import ru.vyatsu.service.Parser;
-import ru.vyatsu.service.ParserFactory;
+import ru.vyatsu.service.TransformerFactory;
 import ru.vyatsu.service.converters.JSONtoXMLTransformer;
 import ru.vyatsu.service.converters.XMLtoJSONTransformer;
 import ru.vyatsu.service.structure.Brand;
@@ -18,9 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 public class Main {
     public static void main(String[] args) {
         if (args.length < 2) {
@@ -59,10 +56,10 @@ public class Main {
 
     private static void convertXMLtoJSON(String content, String outputFile) {
         try {
-            Parser xmlParser = ParserFactory.createParser("XML");
-            GarageXML garageXML = (GarageXML) xmlParser.parse(content);
+            XmlMapper xmlMapper = new XmlMapper();
+            GarageXML garageXML = xmlMapper.readValue(content, GarageXML.class);
 
-            XMLtoJSONTransformer transformer = new XMLtoJSONTransformer();
+            XMLtoJSONTransformer transformer = (XMLtoJSONTransformer) TransformerFactory.createTransformer("XMLTOJSON");
             List<Brand> brandList = transformer.transform(garageXML);
 
             List<BrandWrapper> brandWrappers = new ArrayList<>();
@@ -91,7 +88,7 @@ public class Main {
             ObjectMapper objectMapper = new ObjectMapper();
             Brands brands = objectMapper.readValue(content, Brands.class);
 
-            JSONtoXMLTransformer transformerToXML = new JSONtoXMLTransformer();
+            JSONtoXMLTransformer transformerToXML = (JSONtoXMLTransformer) TransformerFactory.createTransformer("JSONTOXML");
             GarageXML garageForXML = transformerToXML.transform(brands);
 
             XmlMapper xmlMapper = new XmlMapper();
