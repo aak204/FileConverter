@@ -4,16 +4,20 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Представляет автомобиль с его характеристиками в формате XML.
+ */
 @Getter
 @Setter
 public class CarXML {
     @JacksonXmlProperty(isAttribute = true)
-    private int id;
+    private int id; // Идентификатор
     @JacksonXmlProperty(isAttribute = true)
-    private String type;
-    private String brand;
-    private String model;
-    private String year;
-    private EngineXML engine;
-    private String color;
+    private String type; // Тип автомобиля
+    private String brand; // Марка
+    private String model; // Модель
+    private String year; // Год выпуска
+    private EngineXML engine; // Двигатель
+    private String color; // Цвет
 }
+

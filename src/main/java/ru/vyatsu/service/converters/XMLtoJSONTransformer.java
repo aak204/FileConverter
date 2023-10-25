@@ -7,6 +7,9 @@ import ru.vyatsu.service.structure.CarXML;
 import ru.vyatsu.service.structure.GarageXML;
 import java.util.*;
 
+/**
+ * Трансформер для преобразования данных из формата XML (в виде {@link GarageXML}) в JSON (в виде списка {@link Brand}).
+ */
 public class XMLtoJSONTransformer implements Transformer<GarageXML, List<Brand>> {
     @Override
     public List<Brand> transform(GarageXML garageXML) {

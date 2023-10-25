@@ -6,7 +6,6 @@ import ru.vyatsu.service.TransformerFactory;
 import ru.vyatsu.service.converters.JSONtoXMLTransformer;
 import ru.vyatsu.service.converters.XMLtoJSONTransformer;
 import ru.vyatsu.service.structure.Brand;
-import ru.vyatsu.service.structure.BrandWrapper;
 import ru.vyatsu.service.structure.Brands;
 import ru.vyatsu.service.structure.GarageXML;
 
@@ -18,7 +17,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Главный класс приложения для преобразования данных между форматами XML и JSON.
+ * Поддерживает конвертацию XML в JSON и наоборот.
+ */
 public class Main {
+    /**
+     * Основной метод для запуска приложения.
+     *
+     * @param args Аргументы командной строки. Ожидаются два аргумента: путь к входному файлу и путь к выходному файлу.
+     */
     public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Нужно ввести минимум 2 аргумента: [input file path] [name output file]");
@@ -54,6 +62,12 @@ public class Main {
         return inputFile.endsWith(".json") && outputFile.endsWith(".xml");
     }
 
+    /**
+     * Преобразует данные из формата XML в формат JSON.
+     *
+     * @param content Строка, содержащая XML-данные.
+     * @param outputFile Путь к файлу, куда будет записан результат в формате JSON.
+     */
     private static void convertXMLtoJSON(String content, String outputFile) {
         try {
             XmlMapper xmlMapper = new XmlMapper();
@@ -62,15 +76,8 @@ public class Main {
             XMLtoJSONTransformer transformer = (XMLtoJSONTransformer) TransformerFactory.createTransformer("XMLTOJSON");
             List<Brand> brandList = transformer.transform(garageXML);
 
-            List<BrandWrapper> brandWrappers = new ArrayList<>();
-            for (Brand brand : brandList) {
-                BrandWrapper brandWrapper = new BrandWrapper();
-                brandWrapper.setBrand(brand);
-                brandWrappers.add(brandWrapper);
-            }
-
             Brands brands = new Brands();
-            brands.setBrands(brandWrappers);
+            brands.setBrands(brandList);
 
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonContent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(brands);
@@ -83,6 +90,12 @@ public class Main {
         }
     }
 
+    /**
+     * Преобразует данные из формата JSON в формат XML.
+     *
+     * @param content Строка, содержащая JSON-данные.
+     * @param outputFile Путь к файлу, куда будет записан результат в формате XML.
+     */
     private static void convertJSONtoXML(String content, String outputFile) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
