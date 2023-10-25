@@ -15,8 +15,7 @@ public class JSONtoXMLTransformer implements Transformer<Brands, GarageXML> {
         GarageXML garageXML = new GarageXML();
         List<CarXML> carXMLList = new ArrayList<>();
 
-        for (BrandWrapper brandWrapper : brandsJSON.getBrands()) {
-            Brand brand = brandWrapper.getBrand();
+        for (Brand brand : brandsJSON.getBrands()) {
             for (CarJSON car : brand.getCars()) {
                 CarXML carXML = new CarXML();
                 carXML.setBrand(brand.getName());
