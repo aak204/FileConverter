@@ -23,7 +23,14 @@ public class ConversionService {
             XmlMapper xmlMapper = new XmlMapper();
             GarageXML garageXML = xmlMapper.readValue(contents, GarageXML.class);
 
-            List<Brand> brandList = (List<Brand>) TransformerType.XMLTOJSON.transform(garageXML);
+            Object result = TransformerType.XMLTOJSON.transform(garageXML);
+            if (!(result instanceof List<?>)) {
+                logger.error("Ожидалось получить List<Brand>, а получили {}", result.getClass().getSimpleName());
+                return;
+            }
+
+            @SuppressWarnings("unchecked")
+            List<Brand> brandList = (List<Brand>) result;
 
             Brands brands = new Brands();
             brands.setCarBrands(brandList);
