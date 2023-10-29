@@ -1,25 +1,20 @@
 package ru.vyatsu.service;
 
-import ru.vyatsu.service.converters.JSONtoXMLTransformer;
-import ru.vyatsu.service.converters.XMLtoJSONTransformer;
-
 /**
- * Фабрика для создания экземпляров {@link Transformer}.
+ * Фабрика для создания экземпляров {@link TransformerType}.
  */
+
 public class TransformerFactory {
 
-    /**
-     * Создаёт трансформер в зависимости от указанного типа.
-     *
-     * @param type Тип трансформера, который необходимо создать.
-     * @return Экземпляр трансформера.
-     * @throws IllegalArgumentException Если указанный тип трансформера неизвестен.
-     */
-    public static Transformer<?, ?> createTransformer(String type) {
-        return switch (type.toUpperCase()) {
-            case "XMLTOJSON" -> new XMLtoJSONTransformer();
-            case "JSONTOXML" -> new JSONtoXMLTransformer();
-            default -> throw new IllegalArgumentException("Неизвестный тип");
-        };
+    private TransformerFactory() {
+        throw new UnsupportedOperationException("Этот класс является утилитарным и не может быть инсталлирован");
+    }
+
+    public static Object createTransformer(String type, Object input) {
+        try {
+            return TransformerType.valueOf(type.toUpperCase()).transform(input);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Неизвестный тип", e);
+        }
     }
 }
