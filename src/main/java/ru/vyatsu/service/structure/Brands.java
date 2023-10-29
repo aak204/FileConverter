@@ -14,5 +14,5 @@ import java.util.List;
 @Setter
 public class Brands {
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-    private List<Brand> brands; // Список марок
+    private List<Brand> carBrands; // Список марок
 }

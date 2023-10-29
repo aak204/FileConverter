@@ -1,10 +1,12 @@
 package ru.vyatsu.service.converters;
 
 import ru.vyatsu.service.Transformer;
-import ru.vyatsu.service.structure.*;
+import ru.vyatsu.service.structure.Brands;
+import ru.vyatsu.service.structure.CarXML;
+import ru.vyatsu.service.structure.GarageXML;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Трансформер для преобразования данных из формата JSON (в виде {@link Brands}) в XML (в виде {@link GarageXML}).
@@ -12,23 +14,20 @@ import java.util.List;
 public class JSONtoXMLTransformer implements Transformer<Brands, GarageXML> {
     @Override
     public GarageXML transform(Brands brandsJSON) {
-        GarageXML garageXML = new GarageXML();
-        List<CarXML> carXMLList = new ArrayList<>();
-
-        for (Brand brand : brandsJSON.getBrands()) {
-            for (CarJSON car : brand.getCars()) {
-                CarXML carXML = new CarXML();
-                carXML.setBrand(brand.getName());
-                carXML.setModel(car.getModel());
-                carXML.setYear(car.getYear());
-                carXML.setColor(car.getColor());
-                carXML.setEngine(car.getEngine());
-                carXML.setId(car.getId());
-                carXML.setType(car.getType());
-
-                carXMLList.add(carXML);
-            }
-        }
+        var garageXML = new GarageXML();
+        List<CarXML> carXMLList = brandsJSON.getCarBrands().stream()
+                .flatMap(brand -> brand.getCars().stream()
+                        .map(car -> CarXML.builder()
+                                .brand(brand.getName())
+                                .model(car.getModel())
+                                .year(car.getYear())
+                                .color(car.getColor())
+                                .engine(car.getEngine())
+                                .id(car.getId())
+                                .type(car.getType())
+                                .build()
+                        )
+                ).collect(Collectors.toList());
 
         garageXML.setCars(carXMLList);
         return garageXML;

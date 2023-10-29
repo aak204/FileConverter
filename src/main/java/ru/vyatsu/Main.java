@@ -76,7 +76,7 @@ public class Main {
             List<Brand> brandList = transformer.transform(garageXML);
 
             Brands brands = new Brands();
-            brands.setBrands(brandList);
+            brands.setCarBrands(brandList);
 
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonContent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(brands);

@@ -1,6 +1,7 @@
 package ru.vyatsu.service.structure;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 public class CarXML {
     @JacksonXmlProperty(isAttribute = true)
     private int id; // Идентификатор
@@ -20,4 +22,3 @@ public class CarXML {
     private EngineXML engine; // Двигатель
     private String color; // Цвет
 }
-

@@ -3,9 +3,12 @@ package ru.vyatsu.service.converters;
 import ru.vyatsu.service.Transformer;
 import ru.vyatsu.service.structure.Brand;
 import ru.vyatsu.service.structure.CarJSON;
-import ru.vyatsu.service.structure.CarXML;
 import ru.vyatsu.service.structure.GarageXML;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Трансформер для преобразования данных из формата XML (в виде {@link GarageXML}) в JSON (в виде списка {@link Brand}).
@@ -13,28 +16,28 @@ import java.util.*;
 public class XMLtoJSONTransformer implements Transformer<GarageXML, List<Brand>> {
     @Override
     public List<Brand> transform(GarageXML garageXML) {
-        Map<String, Brand> brandMap = new LinkedHashMap<>();
+        Map<String, List<CarJSON>> brandMap = new LinkedHashMap<>();
 
-        for(CarXML carXML : garageXML.getCars()) {
-            Brand brand = brandMap.getOrDefault(carXML.getBrand(), new Brand());
-            brand.setName(carXML.getBrand());
+        garageXML.getCars().forEach(carXML -> {
+            var car = CarJSON.builder()
+                    .id(carXML.getId())
+                    .type(carXML.getType())
+                    .model(carXML.getModel())
+                    .year(carXML.getYear())
+                    .color(carXML.getColor())
+                    .engine(carXML.getEngine())
+                    .build();
 
-            CarJSON car = new CarJSON();
-            car.setId(carXML.getId());
-            car.setType(carXML.getType());
-            car.setModel(carXML.getModel());
-            car.setYear(carXML.getYear());
-            car.setColor(carXML.getColor());
-            car.setEngine(carXML.getEngine());
+            brandMap.computeIfAbsent(carXML.getBrand(), k -> new ArrayList<>()).add(car);
+        });
 
-            if(brand.getCars() == null) {
-                brand.setCars(new ArrayList<>());
-            }
-            brand.getCars().add(car);
-
-            brandMap.put(carXML.getBrand(), brand);
-        }
-
-        return new ArrayList<>(brandMap.values());
+        return brandMap.entrySet().stream()
+                .map(entry -> {
+                    var brand = new Brand();
+                    brand.setName(entry.getKey());
+                    brand.setCars(entry.getValue());
+                    return brand;
+                })
+                .toList();
     }
 }

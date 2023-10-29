@@ -1,6 +1,7 @@
 package ru.vyatsu.service.structure;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonPropertyOrder({"id", "type", "model", "year", "color", "engine"})
+@Builder
 public class CarJSON {
     private String model; // Модель автомобиля
     private String year; // Год выпуска
