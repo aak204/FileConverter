@@ -1,15 +1,15 @@
 package ru.vyatsu.service.structure;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Представляет автомобиль с его характеристиками в формате XML.
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CarXML {
     @JacksonXmlProperty(isAttribute = true)

@@ -1,18 +1,14 @@
 package ru.vyatsu.service.converters;
 
-import ru.vyatsu.service.TransformerType;
 import ru.vyatsu.service.structure.Brands;
 import ru.vyatsu.service.structure.CarXML;
 import ru.vyatsu.service.structure.GarageXML;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Трансформер для преобразования данных из формата JSON (в виде {@link Brands}) в XML (в виде {@link GarageXML}).
  */
-public class JSONtoXMLTransformer implements TransformerType<Brands, GarageXML> {
-    @Override
+public class JSONtoXMLTransformer {
     public GarageXML transform(Brands brandsJSON) {
         var garageXML = new GarageXML();
         List<CarXML> carXMLList = brandsJSON.getCarBrands().stream()
@@ -27,7 +23,7 @@ public class JSONtoXMLTransformer implements TransformerType<Brands, GarageXML> 
                                 .type(car.getType())
                                 .build()
                         )
-                ).collect(Collectors.toList());
+                ).toList();
 
         garageXML.setCars(carXMLList);
         return garageXML;

@@ -1,6 +1,5 @@
 package ru.vyatsu.service.converters;
 
-import ru.vyatsu.service.TransformerType;
 import ru.vyatsu.service.structure.Brand;
 import ru.vyatsu.service.structure.CarJSON;
 import ru.vyatsu.service.structure.GarageXML;
@@ -13,8 +12,7 @@ import java.util.Map;
 /**
  * Трансформер для преобразования данных из формата XML (в виде {@link GarageXML}) в JSON (в виде списка {@link Brand}).
  */
-public class XMLtoJSONTransformer implements TransformerType<GarageXML, List<Brand>> {
-    @Override
+public class XMLtoJSONTransformer {
     public List<Brand> transform(GarageXML garageXML) {
         Map<String, List<CarJSON>> brandMap = new LinkedHashMap<>();
 

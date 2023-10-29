@@ -1,116 +1,58 @@
 package ru.vyatsu;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import ru.vyatsu.service.TransformerFactory;
-import ru.vyatsu.service.converters.JSONtoXMLTransformer;
-import ru.vyatsu.service.converters.XMLtoJSONTransformer;
-import ru.vyatsu.service.structure.Brand;
-import ru.vyatsu.service.structure.Brands;
-import ru.vyatsu.service.structure.GarageXML;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import ru.vyatsu.service.ConversionService;
+import ru.vyatsu.service.MenuService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Главный класс приложения для преобразования данных между форматами XML и JSON.
  * Поддерживает конвертацию XML в JSON и наоборот.
  */
 public class Main {
-    /**
-     * Основной метод для запуска приложения.
-     *
-     * @param args Аргументы командной строки. Ожидаются два аргумента: путь к входному файлу и путь к выходному файлу.
-     */
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
-        if (args.length < 2) {
-            System.out.println("Нужно ввести минимум 2 аргумента: [input file path] [name output file]");
+        MenuService menuService = new MenuService();
+        ConversionService conversionService = new ConversionService();
+
+        try {
+            if (args.length >= 2) {
+                // Запуск с аргументами командной строки
+                String inputFile = args[0];
+                String outputFile = args[1];
+                int choice;
+                if (conversionService.isXMLtoJSON(inputFile, outputFile)) {
+                    choice = 1;
+                } else if (conversionService.isJSONtoXML(inputFile, outputFile)) {
+                    choice = 2;
+                } else {
+                    logger.error("Неподдерживаемый формат или комбинация файлов.");
+                    return;
+                }
+                processConversion(inputFile, outputFile, choice, conversionService);
+            } else {
+                // Интерактивный режим
+                int choice = menuService.getUserChoice();
+                if (choice == -1) {
+                    logger.error("Неверный выбор операции или ошибка ввода.");
+                    return;
+                }
+
+                String inputFile = menuService.getInputFilePath();
+                String outputFile = menuService.getOutputFilePath();
+                processConversion(inputFile, outputFile, choice, conversionService);
+            }
+        } catch (Exception e) {
+            logger.error("Произошла ошибка: {}", e.getMessage());
+        }
+    }
+
+    private static void processConversion(String inputFile, String outputFile, int choice, ConversionService conversionService) {
+        if (choice != 1 && choice != 2) {
+            logger.error("Неверный выбор операции: {}", choice);
             return;
         }
-
-        String filePath = args[0];
-        String outputFile = args[1];
-        String content;
-
-        try {
-            content = Files.readString(Paths.get(filePath), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            System.out.println("Ошибка чтения файла: " + filePath);
-            e.printStackTrace();
-            return;
-        }
-
-        if (isXMLtoJSON(filePath, outputFile)) {
-            convertXMLtoJSON(content, outputFile);
-        } else if (isJSONtoXML(filePath, outputFile)) {
-            convertJSONtoXML(content, outputFile);
-        } else {
-            System.out.println("Неподдерживаемый формат файла или комбинация форматов");
-        }
-    }
-
-    private static boolean isXMLtoJSON(String inputFile, String outputFile) {
-        return inputFile.endsWith(".xml") && outputFile.endsWith(".json");
-    }
-
-    private static boolean isJSONtoXML(String inputFile, String outputFile) {
-        return inputFile.endsWith(".json") && outputFile.endsWith(".xml");
-    }
-
-    /**
-     * Преобразует данные из формата XML в формат JSON.
-     *
-     * @param content Строка, содержащая XML-данные.
-     * @param outputFile Путь к файлу, куда будет записан результат в формате JSON.
-     */
-    private static void convertXMLtoJSON(String content, String outputFile) {
-        try {
-            XmlMapper xmlMapper = new XmlMapper();
-            GarageXML garageXML = xmlMapper.readValue(content, GarageXML.class);
-
-            XMLtoJSONTransformer transformer = (XMLtoJSONTransformer) TransformerFactory.createTransformer("XMLTOJSON");
-            List<Brand> brandList = transformer.transform(garageXML);
-
-            Brands brands = new Brands();
-            brands.setCarBrands(brandList);
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonContent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(brands);
-
-            Path outputPath = Paths.get(outputFile);
-            Files.writeString(outputPath, jsonContent);
-        } catch (Exception e) {
-            System.out.println("Ошибка при конвертации XML в JSON");
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Преобразует данные из формата JSON в формат XML.
-     *
-     * @param content Строка, содержащая JSON-данные.
-     * @param outputFile Путь к файлу, куда будет записан результат в формате XML.
-     */
-    private static void convertJSONtoXML(String content, String outputFile) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Brands brands = objectMapper.readValue(content, Brands.class);
-
-            JSONtoXMLTransformer transformerToXML = (JSONtoXMLTransformer) TransformerFactory.createTransformer("JSONTOXML");
-            GarageXML garageForXML = transformerToXML.transform(brands);
-
-            XmlMapper xmlMapper = new XmlMapper();
-            String resultXmlContent = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(garageForXML);
-
-            Path xmlOutputPath = Paths.get(outputFile);
-            Files.writeString(xmlOutputPath, resultXmlContent);
-        } catch (Exception e) {
-            System.out.println("Ошибка при конвертации JSON в XML");
-            e.printStackTrace();
-        }
+        conversionService.convert(inputFile, outputFile, choice);
     }
 }

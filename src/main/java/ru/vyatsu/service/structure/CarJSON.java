@@ -1,9 +1,7 @@
 package ru.vyatsu.service.structure;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Представляет автомобиль с его характеристиками в формате JSON.
@@ -11,6 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonPropertyOrder({"id", "type", "model", "year", "color", "engine"})
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CarJSON {
     private String model; // Модель автомобиля
@@ -20,4 +20,3 @@ public class CarJSON {
     private int id; // Идентификатор
     private String type; // Тип автомобиля
 }
-
