@@ -86,4 +86,12 @@ public class ConversionService {
     public boolean isJSONtoXML(String inputFile, String outputFile) {
         return inputFile.endsWith(".json") && outputFile.endsWith(".xml");
     }
+
+    public static void processConversion(String inputFile, String outputFile, int choice, ConversionService conversionService) {
+        if (choice != 1 && choice != 2) {
+            logger.error("Неверный выбор операции: {}", choice);
+            return;
+        }
+        conversionService.convert(inputFile, outputFile, choice);
+    }
 }

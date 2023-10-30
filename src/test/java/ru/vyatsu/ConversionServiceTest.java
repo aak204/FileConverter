@@ -18,13 +18,13 @@ class ConversionServiceTest {
 
     @Test
     void testConvertXMLtoJSONSuccess() throws Exception {
-        String inputXml = "src/main/resources/data.xml"; // XML file path
-        String outputJson = "src/main/resources/data.json"; // Expected JSON output file path
+        String inputXml = "src/test/resources/data.xml"; // XML file path
+        String outputJson = "src/test/resources/data.json"; // Expected JSON output file path
 
         ConversionService conversionService = new ConversionService();
         conversionService.convertXMLtoJSON(inputXml, outputJson);
 
-        String expectedJson = new String(Files.readAllBytes(Paths.get("src/main/resources/data.json")));
+        String expectedJson = new String(Files.readAllBytes(Paths.get("src/test/resources/data.json")));
         String actualJson = new String(Files.readAllBytes(Paths.get(outputJson)));
 
         Assertions.assertEquals(expectedJson, actualJson, "Преобразованный JSON не соответствует ожидаемому JSON.");

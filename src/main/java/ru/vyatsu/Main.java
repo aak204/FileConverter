@@ -5,6 +5,8 @@ import ru.vyatsu.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static ru.vyatsu.service.ConversionService.processConversion;
+
 /**
  * Главный класс приложения для преобразования данных между форматами XML и JSON.
  * Поддерживает конвертацию XML в JSON и наоборот.
@@ -46,13 +48,5 @@ public class Main {
         } catch (Exception e) {
             logger.error("Произошла ошибка: {}", e.getMessage());
         }
-    }
-
-    private static void processConversion(String inputFile, String outputFile, int choice, ConversionService conversionService) {
-        if (choice != 1 && choice != 2) {
-            logger.error("Неверный выбор операции: {}", choice);
-            return;
-        }
-        conversionService.convert(inputFile, outputFile, choice);
     }
 }
