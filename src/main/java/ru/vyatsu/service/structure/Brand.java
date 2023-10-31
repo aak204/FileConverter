@@ -1,8 +1,7 @@
 package ru.vyatsu.service.structure;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,6 +11,9 @@ import java.util.List;
 @Getter
 @Setter
 @JsonTypeName("brand")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Brand {
     private String name; // Название марки
     private List<CarJSON> cars; // Список моделей автомобилей этой марки

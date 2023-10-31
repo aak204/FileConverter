@@ -9,7 +9,10 @@ import java.util.List;
  * Трансформер для преобразования данных из формата JSON (в виде {@link Brands}) в XML (в виде {@link GarageXML}).
  */
 public class JSONtoXMLTransformer {
-    public GarageXML transform(Brands brandsJSON) {
+    private JSONtoXMLTransformer() {
+        throw new IllegalStateException("Трансформер для преобразования данных из формата JSON");
+    }
+    public static GarageXML transform(Brands brandsJSON) {
         var garageXML = new GarageXML();
         List<CarXML> carXMLList = brandsJSON.getCarBrands().stream()
                 .flatMap(brand -> brand.getCars().stream()

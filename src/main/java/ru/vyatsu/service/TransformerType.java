@@ -12,15 +12,13 @@ public enum TransformerType {
     XMLTOJSON {
         @Override
         public Object transform(Object input) {
-            XMLtoJSONTransformer transformer = new XMLtoJSONTransformer();
-            return transformer.transform((GarageXML) input);
+            return XMLtoJSONTransformer.transform((GarageXML) input);
         }
     },
     JSONTOXML {
         @Override
         public Object transform(Object input) {
-            JSONtoXMLTransformer transformer = new JSONtoXMLTransformer();
-            return transformer.transform((Brands) input);
+            return JSONtoXMLTransformer.transform((Brands) input);
         }
     };
 
