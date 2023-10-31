@@ -1,11 +1,10 @@
 package ru.vyatsu;
 
 import ru.vyatsu.service.ConversionService;
+import ru.vyatsu.service.ConversionType;
 import ru.vyatsu.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static ru.vyatsu.service.ConversionService.processConversion;
 
 /**
  * Главный класс приложения для преобразования данных между форматами XML и JSON.
@@ -15,38 +14,54 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        MenuService menuService = new MenuService();
-        ConversionService conversionService = new ConversionService();
-
         try {
-            if (args.length >= 2) {
+            if (args.length == 2) {
                 // Запуск с аргументами командной строки
                 String inputFile = args[0];
                 String outputFile = args[1];
-                int choice;
-                if (conversionService.isXMLtoJSON(inputFile, outputFile)) {
-                    choice = 1;
-                } else if (conversionService.isJSONtoXML(inputFile, outputFile)) {
-                    choice = 2;
-                } else {
+
+                ConversionType conversionType = determineConversionType(inputFile, outputFile);
+                if (conversionType == ConversionType.INVALID) {
                     logger.error("Неподдерживаемый формат или комбинация файлов.");
                     return;
                 }
-                processConversion(inputFile, outputFile, choice, conversionService);
-            } else {
+                processConversion(inputFile, outputFile, conversionType);
+            } else if (args.length == 0) {
                 // Интерактивный режим
-                int choice = menuService.getUserChoice();
-                if (choice == -1) {
+                int userChoice = MenuService.getUserChoice();
+                ConversionType conversionType = ConversionType.fromInt(userChoice);
+                if (conversionType == ConversionType.INVALID) {
                     logger.error("Неверный выбор операции или ошибка ввода.");
                     return;
                 }
 
-                String inputFile = menuService.getInputFilePath();
-                String outputFile = menuService.getOutputFilePath();
-                processConversion(inputFile, outputFile, choice, conversionService);
+                String inputFile = MenuService.getInputFilePath();
+                String outputFile = MenuService.getOutputFilePath();
+                processConversion(inputFile, outputFile, conversionType);
+            } else {
+                // Ошибка в количестве аргументов
+                logger.error("Неверное количество аргументов. Для ручного режима не указывайте аргументы, для автоматического используйте 2 аргумента.");
             }
-        } catch (Exception e) {
-            logger.error("Произошла ошибка: {}", e.getMessage());
+        } catch (Exception exception) {
+            logger.error("Произошла ошибка: {}", exception.getMessage());
         }
+    }
+
+    private static ConversionType determineConversionType(String inputFile, String outputFile) {
+        if (ConversionService.isXMLtoJSON(inputFile, outputFile)) {
+            return ConversionType.XML_TO_JSON;
+        } else if (ConversionService.isJSONtoXML(inputFile, outputFile)) {
+            return ConversionType.JSON_TO_XML;
+        } else {
+            return ConversionType.INVALID;
+        }
+    }
+
+    private static void processConversion(String inputFile, String outputFile, ConversionType conversionType) {
+        if (conversionType == ConversionType.INVALID) {
+            logger.error("Неверный выбор операции.");
+            return;
+        }
+        ConversionService.convert(inputFile, outputFile, conversionType);
     }
 }
