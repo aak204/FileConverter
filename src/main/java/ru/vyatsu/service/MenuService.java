@@ -1,5 +1,6 @@
 package ru.vyatsu.service;
 
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,7 @@ public final class MenuService {
             logger.info("1. XML в JSON");
             logger.info("2. JSON в XML");
             try {
-                int choice = scanner.nextInt();
+                val choice = scanner.nextInt();
                 if (choice >= 1 && choice <= 2) {
                     return choice;
                 } else {

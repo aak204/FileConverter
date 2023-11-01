@@ -1,5 +1,6 @@
 package ru.vyatsu.service.converters;
 
+import lombok.val;
 import ru.vyatsu.service.structure.Brand;
 import ru.vyatsu.service.structure.Brands;
 import ru.vyatsu.service.structure.CarJSON;
@@ -8,7 +9,6 @@ import ru.vyatsu.service.structure.GarageXML;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Трансформер для преобразования данных из формата XML (в виде {@link GarageXML}) в JSON (в виде списка {@link Brand}).
@@ -19,10 +19,10 @@ public class XMLtoJSONTransformer {
     }
 
     public static Brands transform(GarageXML garageXML) {
-        Map<String, List<CarJSON>> brandMap = new LinkedHashMap<>();
+        val brandMap = new LinkedHashMap<String, List<CarJSON>>();
 
         garageXML.getCars().forEach(carXML -> {
-            CarJSON car = CarJSON.builder()
+            val car = CarJSON.builder()
                     .id(carXML.getId())
                     .type(carXML.getType())
                     .model(carXML.getModel())
@@ -34,14 +34,14 @@ public class XMLtoJSONTransformer {
             brandMap.computeIfAbsent(carXML.getBrand(), k -> new ArrayList<>()).add(car);
         });
 
-        List<Brand> brandsList = brandMap.entrySet().stream()
+        val brandsList = brandMap.entrySet().stream()
                 .map(entry -> Brand.builder()
                         .name(entry.getKey())
                         .cars(entry.getValue())
                         .build())
                 .toList();
 
-        Brands brands = new Brands();
+        val brands = new Brands();
         brands.setCarBrands(brandsList);
         return brands;
     }

@@ -1,9 +1,9 @@
 package ru.vyatsu.service.converters;
 
+import lombok.val;
 import ru.vyatsu.service.structure.Brands;
 import ru.vyatsu.service.structure.CarXML;
 import ru.vyatsu.service.structure.GarageXML;
-import java.util.List;
 
 /**
  * Трансформер для преобразования данных из формата JSON (в виде {@link Brands}) в XML (в виде {@link GarageXML}).
@@ -13,8 +13,8 @@ public class JSONtoXMLTransformer {
         throw new IllegalStateException("Трансформер для преобразования данных из формата JSON");
     }
     public static GarageXML transform(Brands brandsJSON) {
-        var garageXML = new GarageXML();
-        List<CarXML> carXMLList = brandsJSON.getCarBrands().stream()
+        val garageXML = new GarageXML();
+        val carXMLList = brandsJSON.getCarBrands().stream()
                 .flatMap(brand -> brand.getCars().stream()
                         .map(car -> CarXML.builder()
                                 .brand(brand.getName())

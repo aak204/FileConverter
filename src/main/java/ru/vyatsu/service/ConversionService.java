@@ -3,6 +3,7 @@ package ru.vyatsu.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vyatsu.service.structure.Brands;
@@ -27,8 +28,8 @@ public final class ConversionService {
             switch (conversionType) {
                 case XML_TO_JSON -> {
                     if (isXMLtoJSON(inputFile, outputFile)) {
-                        String xmlContent = readFile(inputFile);
-                        String jsonContent = convertXMLtoJSON(xmlContent);
+                        val xmlContent = readFile(inputFile);
+                        val jsonContent = convertXMLtoJSON(xmlContent);
                         writeFile(outputFile, jsonContent);
                     } else {
                         logger.error("Неверный формат для XML -> JSON конвертации.");
@@ -36,8 +37,8 @@ public final class ConversionService {
                 }
                 case JSON_TO_XML -> {
                     if (isJSONtoXML(inputFile, outputFile)) {
-                        String jsonContent = readFile(inputFile);
-                        String xmlContent = convertJSONtoXML(jsonContent);
+                        val jsonContent = readFile(inputFile);
+                        val xmlContent = convertJSONtoXML(jsonContent);
                         writeFile(outputFile, xmlContent);
                     } else {
                         logger.error("Неверный формат для JSON -> XML конвертации.");
@@ -59,22 +60,20 @@ public final class ConversionService {
     }
 
     public static String convertXMLtoJSON(String xmlContent) throws JsonProcessingException {
-        GarageXML garageXML = xmlMapper.readValue(xmlContent, GarageXML.class);
-        Object result = TransformerType.XMLTOJSON.transform(garageXML);
+        val garageXML = xmlMapper.readValue(xmlContent, GarageXML.class);
+        val result = TransformerType.XMLTOJSON.transform(garageXML);
 
-        // Проверка и обработка результата
         if (!(result instanceof Brands brands)) {
             logger.error("Ожидалось получить Brands, а получили {}", result != null ? result.getClass().getSimpleName() : "null");
             return null;
         }
 
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(brands);
-
     }
 
     public static String convertJSONtoXML(String jsonContent) throws JsonProcessingException {
-        Brands brands = objectMapper.readValue(jsonContent, Brands.class);
-        GarageXML garageXML = (GarageXML) TransformerType.JSONTOXML.transform(brands);
+        val brands = objectMapper.readValue(jsonContent, Brands.class);
+        val garageXML = (GarageXML) TransformerType.JSONTOXML.transform(brands);
         return xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(garageXML);
     }
 

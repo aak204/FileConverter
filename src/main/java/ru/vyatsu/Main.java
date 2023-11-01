@@ -1,5 +1,6 @@
 package ru.vyatsu;
 
+import lombok.val;
 import ru.vyatsu.service.ConversionService;
 import ru.vyatsu.service.ConversionType;
 import ru.vyatsu.service.MenuService;
@@ -17,10 +18,10 @@ public class Main {
         try {
             if (args.length == 2) {
                 // Запуск с аргументами командной строки
-                String inputFile = args[0];
-                String outputFile = args[1];
+                val inputFile = args[0];
+                val outputFile = args[1];
 
-                ConversionType conversionType = determineConversionType(inputFile, outputFile);
+                val conversionType = determineConversionType(inputFile, outputFile);
                 if (conversionType == ConversionType.INVALID) {
                     logger.error("Неподдерживаемый формат или комбинация файлов.");
                     return;
@@ -28,15 +29,15 @@ public class Main {
                 processConversion(inputFile, outputFile, conversionType);
             } else if (args.length == 0) {
                 // Интерактивный режим
-                int userChoice = MenuService.getUserChoice();
-                ConversionType conversionType = ConversionType.fromInt(userChoice);
+                val userChoice = MenuService.getUserChoice();
+                val conversionType = ConversionType.fromInt(userChoice);
                 if (conversionType == ConversionType.INVALID) {
                     logger.error("Неверный выбор операции или ошибка ввода.");
                     return;
                 }
 
-                String inputFile = MenuService.getInputFilePath();
-                String outputFile = MenuService.getOutputFilePath();
+                val inputFile = MenuService.getInputFilePath();
+                val outputFile = MenuService.getOutputFilePath();
                 processConversion(inputFile, outputFile, conversionType);
             } else {
                 // Ошибка в количестве аргументов

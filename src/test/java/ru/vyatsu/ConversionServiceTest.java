@@ -1,5 +1,6 @@
 package ru.vyatsu;
 
+import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -21,11 +22,11 @@ class ConversionServiceTest {
 
     @Test
     void testConvertXMLtoJSONSuccess() throws Exception {
-        String inputXml = new String(Files.readAllBytes(Paths.get("src/test/resources/data.xml")));
+        val inputXml = new String(Files.readAllBytes(Paths.get("src/test/resources/data.xml")));
 
-        String actualXml = ConversionService.convertXMLtoJSON(inputXml);
+        val actualXml = ConversionService.convertXMLtoJSON(inputXml);
 
-        String expectedJson = new String(Files.readAllBytes(Paths.get("src/test/resources/data.json")));
+        val expectedJson = new String(Files.readAllBytes(Paths.get("src/test/resources/data.json")));
 
         Assertions.assertEquals(expectedJson, actualXml, "Преобразованный JSON не соответствует ожидаемому XML.");
     }
@@ -45,18 +46,18 @@ class ConversionServiceTest {
 
     @Test
     void testConvertJSONtoXMLSuccess() throws Exception {
-        String inputJson = new String(Files.readAllBytes(Paths.get("src/test/resources/data.json")));
+        val inputJson = new String(Files.readAllBytes(Paths.get("src/test/resources/data.json")));
 
-        String actualXml = ConversionService.convertJSONtoXML(inputJson);
+        val actualXml = ConversionService.convertJSONtoXML(inputJson);
 
-        String expectedXml = new String(Files.readAllBytes(Paths.get("src/test/resources/data.xml")));
+        val expectedXml = new String(Files.readAllBytes(Paths.get("src/test/resources/data.xml")));
 
         Assertions.assertEquals(expectedXml, actualXml, "Преобразованный XML не соответствует ожидаемому JSON.");
     }
     @Test
     void testConversionWithInvalidFormat() {
-        String invalidInputFile = "src/test/resources/test.invalid";
-        String outputFile = "src/test/resources/output.json";
+        val invalidInputFile = "src/test/resources/test.invalid";
+        val outputFile = "src/test/resources/output.json";
 
         assertDoesNotThrow(() ->
                 ConversionService.convert(invalidInputFile, outputFile, ConversionType.XML_TO_JSON)
@@ -67,8 +68,8 @@ class ConversionServiceTest {
 
     @Test
     void testConversionWithNonExistentInputFile() {
-        String nonExistentInputFile = "src/test/resources/non_existent.xml";
-        String outputFile = "src/test/resources/output.json";
+        val nonExistentInputFile = "src/test/resources/non_existent.xml";
+        val outputFile = "src/test/resources/output.json";
 
         assertDoesNotThrow(() ->
                 ConversionService.convert(nonExistentInputFile, outputFile, ConversionType.XML_TO_JSON)
@@ -78,8 +79,8 @@ class ConversionServiceTest {
     }
     @Test
     void testConversionWithIncorrectConversionType() {
-        String inputFile = "src/test/resources/data.xml";
-        String outputFile = "src/test/resources/output.json";
+        val inputFile = "src/test/resources/data.xml";
+        val outputFile = "src/test/resources/output.json";
 
         assertDoesNotThrow(() ->
                 ConversionService.convert(inputFile, outputFile, ConversionType.JSON_TO_XML)
@@ -90,8 +91,8 @@ class ConversionServiceTest {
 
     @Test
     void testConversionWithUnsupportedFileFormat() {
-        String inputFile = "src/test/resources/data.txt";
-        String outputFile = "src/test/resources/output.xml";
+        val inputFile = "src/test/resources/data.txt";
+        val outputFile = "src/test/resources/output.xml";
 
         assertDoesNotThrow(() ->
                 ConversionService.convert(inputFile, outputFile, ConversionType.JSON_TO_XML)
@@ -102,8 +103,8 @@ class ConversionServiceTest {
 
     @Test
     void testConversionWithEmptyInputFile() {
-        String emptyInputFile = "src/test/resources/empty.xml";
-        String outputFile = "src/test/resources/output.json";
+        val emptyInputFile = "src/test/resources/empty.xml";
+        val outputFile = "src/test/resources/output.json";
 
         assertDoesNotThrow(() ->
                 ConversionService.convert(emptyInputFile, outputFile, ConversionType.XML_TO_JSON)
@@ -114,7 +115,7 @@ class ConversionServiceTest {
 
     @Test
     void testGetUserChoiceValidInput() {
-        String input = "1\n";
+        val input = "1\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         try {
