@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 public class GarageXML {
     @JacksonXmlElementWrapper(useWrapping = false) // Без обертки
     @JacksonXmlProperty(localName = "car")

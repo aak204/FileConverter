@@ -1,5 +1,6 @@
 package ru.vyatsu.service.converters;
 
+import lombok.experimental.UtilityClass;
 import lombok.val;
 import ru.vyatsu.service.structure.Brand;
 import ru.vyatsu.service.structure.Brands;
@@ -13,12 +14,9 @@ import java.util.List;
 /**
  * Трансформер для преобразования данных из формата XML (в виде {@link GarageXML}) в JSON (в виде списка {@link Brand}).
  */
+@UtilityClass
 public class XMLtoJSONTransformer {
-    private XMLtoJSONTransformer() {
-        throw new IllegalStateException("Utility class");
-    }
-
-    public static Brands transform(GarageXML garageXML) {
+    public Brands transform(GarageXML garageXML) {
         val brandMap = new LinkedHashMap<String, List<CarJSON>>();
 
         garageXML.getCars().forEach(carXML -> {
@@ -34,15 +32,13 @@ public class XMLtoJSONTransformer {
             brandMap.computeIfAbsent(carXML.getBrand(), k -> new ArrayList<>()).add(car);
         });
 
-        val brandsList = brandMap.entrySet().stream()
-                .map(entry -> Brand.builder()
-                        .name(entry.getKey())
-                        .cars(entry.getValue())
-                        .build())
-                .toList();
-
-        val brands = new Brands();
-        brands.setCarBrands(brandsList);
-        return brands;
+        return Brands.builder()
+                .carBrands(brandMap.entrySet().stream()
+                        .map(entry -> Brand.builder()
+                                .name(entry.getKey())
+                                .cars(entry.getValue())
+                                .build())
+                        .toList())
+                .build();
     }
 }

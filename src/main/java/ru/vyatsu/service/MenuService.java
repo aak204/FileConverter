@@ -1,47 +1,40 @@
 package ru.vyatsu.service;
 
+import lombok.experimental.UtilityClass;
 import lombok.val;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import lombok.extern.slf4j.Slf4j;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+@Slf4j
+@UtilityClass
 public final class MenuService {
-    private static final Logger logger = LoggerFactory.getLogger(MenuService.class);
     private static final Scanner scanner = new Scanner(System.in);
-
-    // Запрет на создание экземпляров
-    private MenuService() {
-    }
-
     public static int getUserChoice() {
         while (true) {
-            logger.info("Выберите операцию:");
-            logger.info("1. XML в JSON");
-            logger.info("2. JSON в XML");
+            System.out.println("Выберите операцию:");
+            System.out.println("1. XML в JSON");
+            System.out.println("2. JSON в XML");
             try {
                 val choice = scanner.nextInt();
                 if (choice >= 1 && choice <= 2) {
                     return choice;
-                } else {
-                    logger.error("Неверный выбор: {}. Пожалуйста, выберите 1 или 2", choice);
                 }
+                log.error("Неверный выбор: " + choice + ". Пожалуйста, выберите 1 или 2");
             } catch (InputMismatchException e) {
-                logger.error("Введено некорректное значение. Пожалуйста, введите число.");
+                log.error("Введено некорректное значение. Пожалуйста, введите число.");
                 scanner.nextLine(); // Очищаем сканер
             }
         }
     }
 
     public static String getInputFilePath() {
-        logger.info("Введите путь к входному файлу:");
+        System.out.println("Введите путь к входному файлу:");
         scanner.nextLine(); // Читаем остаток предыдущей строки (если есть)
         return scanner.nextLine();
     }
 
     public static String getOutputFilePath() {
-        logger.info("Введите путь к выходному файлу:");
+        System.out.println("Введите путь к выходному файлу:");
         return scanner.nextLine();
     }
 }

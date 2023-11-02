@@ -1,19 +1,18 @@
 package ru.vyatsu;
 
 import lombok.val;
+import ru.vyatsu.service.ConversionException;
 import ru.vyatsu.service.ConversionService;
 import ru.vyatsu.service.ConversionType;
 import ru.vyatsu.service.MenuService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Главный класс приложения для преобразования данных между форматами XML и JSON.
  * Поддерживает конвертацию XML в JSON и наоборот.
  */
+@Slf4j
 public class Main {
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
-
     public static void main(String[] args) {
         try {
             if (args.length == 2) {
@@ -23,7 +22,7 @@ public class Main {
 
                 val conversionType = determineConversionType(inputFile, outputFile);
                 if (conversionType == ConversionType.INVALID) {
-                    logger.error("Неподдерживаемый формат или комбинация файлов.");
+                    log.error("Неподдерживаемый формат или комбинация файлов.");
                     return;
                 }
                 processConversion(inputFile, outputFile, conversionType);
@@ -32,7 +31,7 @@ public class Main {
                 val userChoice = MenuService.getUserChoice();
                 val conversionType = ConversionType.fromInt(userChoice);
                 if (conversionType == ConversionType.INVALID) {
-                    logger.error("Неверный выбор операции или ошибка ввода.");
+                    log.error("Неверный выбор операции или ошибка ввода.");
                     return;
                 }
 
@@ -41,10 +40,10 @@ public class Main {
                 processConversion(inputFile, outputFile, conversionType);
             } else {
                 // Ошибка в количестве аргументов
-                logger.error("Неверное количество аргументов. Для ручного режима не указывайте аргументы, для автоматического используйте 2 аргумента.");
+                log.error("Неверное количество аргументов. Для ручного режима не указывайте аргументы, для автоматического используйте 2 аргумента.");
             }
         } catch (Exception exception) {
-            logger.error("Произошла ошибка: {}", exception.getMessage());
+            log.error("Произошла ошибка: {}", exception.getMessage());
         }
     }
 
@@ -58,11 +57,7 @@ public class Main {
         }
     }
 
-    private static void processConversion(String inputFile, String outputFile, ConversionType conversionType) {
-        if (conversionType == ConversionType.INVALID) {
-            logger.error("Неверный выбор операции.");
-            return;
-        }
+    private static void processConversion(String inputFile, String outputFile, ConversionType conversionType) throws ConversionException {
         ConversionService.convert(inputFile, outputFile, conversionType);
     }
 }
