@@ -8,8 +8,8 @@ import java.util.Scanner;
 @Slf4j
 @UtilityClass
 public final class MenuService {
-    private static final Scanner scanner = new Scanner(System.in);
-    public static int getUserChoice() {
+    private final Scanner scanner = new Scanner(System.in);
+    public int getUserChoice() {
         while (true) {
             System.out.println("Выберите операцию:");
             System.out.println("1. XML в JSON");
@@ -27,13 +27,13 @@ public final class MenuService {
         }
     }
 
-    public static String getInputFilePath() {
+    public String getInputFilePath() {
         System.out.println("Введите путь к входному файлу:");
         scanner.nextLine(); // Читаем остаток предыдущей строки (если есть)
         return scanner.nextLine();
     }
 
-    public static String getOutputFilePath() {
+    public String getOutputFilePath() {
         System.out.println("Введите путь к выходному файлу:");
         return scanner.nextLine();
     }
