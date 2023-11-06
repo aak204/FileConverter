@@ -18,8 +18,8 @@ import static ru.vyatsu.service.TransformerType.XMLTOJSON;
 @Slf4j
 @UtilityClass
 public final class ConversionService {
-    private static final String EXTENSION_XML = ".xml";
-    private static final String EXTENSION_JSON = ".json";
+    private final String EXTENSION_XML = ".xml";
+    private final String EXTENSION_JSON = ".json";
 
     private final XmlMapper xmlMapper = new XmlMapper();
     private final ObjectMapper objectMapper = new ObjectMapper();
