@@ -7,14 +7,16 @@ import ru.vyatsu.service.MenuService;
 
 import java.io.ByteArrayInputStream;
 
+import static org.junit.Assert.assertEquals;
+
 class UserInterfaceTests {
     @Test
     void testGetUserChoiceValidInput() {
-        val input = "1\n";
+        val input = "1" + System.lineSeparator();
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         try {
-            Assertions.assertEquals(1, MenuService.getUserChoice());
+            assertEquals(1, MenuService.getUserChoice());
         } finally {
             System.setIn(System.in); // Возвращаем стандартный ввод
         }

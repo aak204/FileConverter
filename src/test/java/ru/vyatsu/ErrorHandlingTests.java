@@ -9,6 +9,7 @@ import ru.vyatsu.service.ConversionType;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ErrorHandlingTests {
@@ -21,7 +22,7 @@ class ErrorHandlingTests {
                 ConversionService.convert(invalidInputFile, outputFile, ConversionType.XML_TO_JSON)
         );
 
-        Assertions.assertFalse(Files.exists(Paths.get(outputFile)));
+        assertFalse(Files.exists(Paths.get(outputFile)));
     }
 
     @Test
@@ -33,7 +34,7 @@ class ErrorHandlingTests {
                 ConversionService.convert(nonExistentInputFile, outputFile, ConversionType.XML_TO_JSON)
         );
 
-        Assertions.assertFalse(Files.exists(Paths.get(outputFile)));
+        assertFalse(Files.exists(Paths.get(outputFile)));
     }
     @Test
     void testConversionWithIncorrectConversionType() {
@@ -44,7 +45,7 @@ class ErrorHandlingTests {
                 ConversionService.convert(inputFile, outputFile, ConversionType.JSON_TO_XML)
         );
 
-        Assertions.assertFalse(Files.exists(Paths.get(outputFile)));
+        assertFalse(Files.exists(Paths.get(outputFile)));
     }
 
     @Test
@@ -56,7 +57,7 @@ class ErrorHandlingTests {
                 ConversionService.convert(inputFile, outputFile, ConversionType.JSON_TO_XML)
         );
 
-        Assertions.assertFalse(Files.exists(Paths.get(outputFile)));
+        assertFalse(Files.exists(Paths.get(outputFile)));
     }
 
     @Test
@@ -68,6 +69,6 @@ class ErrorHandlingTests {
                 ConversionService.convert(emptyInputFile, outputFile, ConversionType.XML_TO_JSON)
         );
 
-        Assertions.assertFalse(Files.exists(Paths.get(outputFile)));
+        assertFalse(Files.exists(Paths.get(outputFile)));
     }
 }

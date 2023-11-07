@@ -4,15 +4,15 @@ import java.util.List;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Класс для представления гаража с автомобилями в формате XML.
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class GarageXML {
     @JacksonXmlElementWrapper(useWrapping = false) // Без обертки

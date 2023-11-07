@@ -1,25 +1,31 @@
 package ru.vyatsu;
 
+import lombok.val;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MainMethodTests {
     @Test
     void testMainWithInsufficientArgs() {
-        try (MockedStatic<LoggerFactory> mocked = mockStatic(LoggerFactory.class)) {
-            Logger mockLogger = mock(Logger.class);
-            mocked.when(() -> LoggerFactory.getLogger(any(Class.class))).thenReturn(mockLogger);
+        val originalErr = System.err;
 
-            String[] args = {"data.json"}; // Недостаточно аргументов
+        try {
+            val errContent = new ByteArrayOutputStream();
+            val printStream = new PrintStream(errContent);
+            System.setErr(printStream);
+
+            val args = new String[]{"data.json"};
             Main.main(args);
 
-            verify(mockLogger).error(contains("Неверное количество аргументов."));
+            val expectedError = "Неверное количество аргументов. Для ручного режима не указывайте аргументы, для автоматического используйте 2 аргумента.";
+            val actualError = errContent.toString();
+            assertTrue(actualError.contains(expectedError));
+
+        } finally {
+            System.setErr(originalErr);
         }
     }
 }

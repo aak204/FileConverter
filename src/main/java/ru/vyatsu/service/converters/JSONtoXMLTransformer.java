@@ -10,7 +10,7 @@ import ru.vyatsu.service.structure.GarageXML;
  */
 @UtilityClass
 public class JSONtoXMLTransformer {
-    public GarageXML transform(Brands brandsJSON) {
+    public GarageXML transform(final Brands brandsJSON) {
         return GarageXML.builder()
                 .cars(brandsJSON.getCarBrands().stream()
                         .flatMap(brand -> brand.getCars().stream()

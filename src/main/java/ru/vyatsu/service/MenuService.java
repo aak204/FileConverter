@@ -19,9 +19,9 @@ public final class MenuService {
                 if (choice >= 1 && choice <= 2) {
                     return choice;
                 }
-                log.error("Неверный выбор: " + choice + ". Пожалуйста, выберите 1 или 2");
+                System.out.println("Неверный выбор: " + choice + ". Пожалуйста, выберите 1 или 2");
             } catch (InputMismatchException e) {
-                log.error("Введено некорректное значение. Пожалуйста, введите число.");
+                System.err.println("Введено некорректное значение. Пожалуйста, введите число.");
                 scanner.nextLine(); // Очищаем сканер
             }
         }

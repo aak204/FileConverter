@@ -8,16 +8,16 @@ import ru.vyatsu.service.structure.Brands;
 import ru.vyatsu.service.structure.GarageXML;
 import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static ru.vyatsu.service.TransformerType.JSONTOXML;
 import static ru.vyatsu.service.TransformerType.XMLTOJSON;
 
 @Slf4j
 @UtilityClass
-public final class ConversionService {
+public class ConversionService {
     private final String EXTENSION_XML = ".xml";
     private final String EXTENSION_JSON = ".json";
 
@@ -28,23 +28,21 @@ public final class ConversionService {
         try {
             switch (conversionType) {
                 case XML_TO_JSON -> {
-                    if (isXMLtoJSON(inputFile, outputFile)) {
-                        writeFile(outputFile, convertXMLtoJSON(readFile(inputFile)));
-                    } else {
+                    if (!isXMLtoJSON(inputFile, outputFile)) {
                         throw new ConversionException("Неверный формат для XML -> JSON конвертации.");
                     }
+                    writeFile(outputFile, convertXMLtoJSON(readFile(inputFile)));
                 }
                 case JSON_TO_XML -> {
-                    if (isJSONtoXML(inputFile, outputFile)) {
-                        writeFile(outputFile, convertJSONtoXML(readFile(inputFile)));
-                    } else {
+                    if (!isJSONtoXML(inputFile, outputFile)) {
                         throw new ConversionException("Неверный формат для JSON -> XML конвертации.");
                     }
+                    writeFile(outputFile, convertJSONtoXML(readFile(inputFile)));
                 }
                 default -> throw new ConversionException("Несоответствие форматов файла и выбранной операции.");
             }
-        } catch (IOException e) {
-            throw new ConversionException("Ошибка при чтении/записи файла или обработке JSON/XML", e);
+        } catch (IOException ioException) {
+            throw new ConversionException("Ошибка при чтении/записи файла или обработке JSON/XML", ioException);
         }
     }
 
@@ -53,7 +51,7 @@ public final class ConversionService {
     }
 
     private void writeFile(final String path, final String content) throws IOException {
-        Files.writeString(Paths.get(path), content, StandardCharsets.UTF_8);
+        Files.writeString(Paths.get(path), content, UTF_8);
     }
 
     public String convertXMLtoJSON(final String xmlContent) throws JsonProcessingException {

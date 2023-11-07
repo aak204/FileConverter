@@ -15,6 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 public class Main {
     public static void main(String[] args) {
         try {
+            if (args.length != 2 && args.length != 0) {
+                System.err.println("Неверное количество аргументов. Для ручного режима не указывайте аргументы, для автоматического используйте 2 аргумента.");
+                return;
+            }
+
             if (args.length == 2) {
                 // Запуск с аргументами командной строки
                 val inputFile = args[0];
@@ -22,25 +27,22 @@ public class Main {
 
                 val conversionType = determineConversionType(inputFile, outputFile);
                 if (conversionType == ConversionType.INVALID) {
-                    log.error("Неподдерживаемый формат или комбинация файлов.");
+                    System.err.println("Неподдерживаемый формат или комбинация файлов.");
                     return;
                 }
                 processConversion(inputFile, outputFile, conversionType);
-            } else if (args.length == 0) {
+            } else {
                 // Интерактивный режим
                 val userChoice = MenuService.getUserChoice();
                 val conversionType = ConversionType.fromInt(userChoice);
                 if (conversionType == ConversionType.INVALID) {
-                    log.error("Неверный выбор операции или ошибка ввода.");
+                    System.err.println("Неверный выбор операции или ошибка ввода.");
                     return;
                 }
 
                 val inputFile = MenuService.getInputFilePath();
                 val outputFile = MenuService.getOutputFilePath();
                 processConversion(inputFile, outputFile, conversionType);
-            } else {
-                // Ошибка в количестве аргументов
-                log.error("Неверное количество аргументов. Для ручного режима не указывайте аргументы, для автоматического используйте 2 аргумента.");
             }
         } catch (Exception exception) {
             log.error("Произошла ошибка: {}", exception.getMessage());
@@ -50,11 +52,11 @@ public class Main {
     private static ConversionType determineConversionType(String inputFile, String outputFile) {
         if (ConversionService.isXMLtoJSON(inputFile, outputFile)) {
             return ConversionType.XML_TO_JSON;
-        } else if (ConversionService.isJSONtoXML(inputFile, outputFile)) {
-            return ConversionType.JSON_TO_XML;
-        } else {
-            return ConversionType.INVALID;
         }
+        if (ConversionService.isJSONtoXML(inputFile, outputFile)) {
+            return ConversionType.JSON_TO_XML;
+        }
+        return ConversionType.INVALID;
     }
 
     private static void processConversion(String inputFile, String outputFile, ConversionType conversionType) throws ConversionException {

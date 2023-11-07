@@ -1,11 +1,7 @@
 package ru.vyatsu.service;
 
-public class ConversionException extends Exception {
-    public ConversionException(String message) {
-        super(message);
-    }
+import lombok.experimental.StandardException;
 
-    public ConversionException(String message, Throwable cause) {
-        super(message, cause);
-    }
+@StandardException
+public class ConversionException extends Exception {
 }

@@ -16,7 +16,7 @@ import java.util.List;
  */
 @UtilityClass
 public class XMLtoJSONTransformer {
-    public Brands transform(GarageXML garageXML) {
+    public Brands transform(final GarageXML garageXML) {
         val brandMap = new LinkedHashMap<String, List<CarJSON>>();
 
         garageXML.getCars().forEach(carXML -> {
@@ -29,7 +29,7 @@ public class XMLtoJSONTransformer {
                     .engine(carXML.getEngine())
                     .build();
 
-            brandMap.computeIfAbsent(carXML.getBrand(), k -> new ArrayList<>()).add(car);
+            brandMap.computeIfAbsent(carXML.getBrand(), brand -> new ArrayList<>()).add(car);
         });
 
         return Brands.builder()

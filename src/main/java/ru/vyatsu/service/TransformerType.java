@@ -11,16 +11,16 @@ import ru.vyatsu.service.structure.GarageXML;
 public enum TransformerType {
     XMLTOJSON {
         @Override
-        public Object transform(Object input) {
+        public Object transform(final Object input) {
             return XMLtoJSONTransformer.transform((GarageXML) input);
         }
     },
     JSONTOXML {
         @Override
-        public Object transform(Object input) {
+        public Object transform(final Object input) {
             return JSONtoXMLTransformer.transform((Brands) input);
         }
     };
 
-    public abstract Object transform(Object input);
+    public abstract Object transform(final Object input);
 }
