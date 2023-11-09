@@ -5,13 +5,11 @@ import ru.vyatsu.service.ConversionException;
 import ru.vyatsu.service.ConversionService;
 import ru.vyatsu.service.ConversionType;
 import ru.vyatsu.service.MenuService;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Главный класс приложения для преобразования данных между форматами XML и JSON.
  * Поддерживает конвертацию XML в JSON и наоборот.
  */
-@Slf4j
 public class Main {
     public static void main(String[] args) {
         try {
