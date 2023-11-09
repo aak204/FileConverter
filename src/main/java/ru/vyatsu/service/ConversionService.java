@@ -6,7 +6,6 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.experimental.UtilityClass;
 import ru.vyatsu.service.structure.Brands;
 import ru.vyatsu.service.structure.GarageXML;
-import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,7 +14,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ru.vyatsu.service.TransformerType.JSONTOXML;
 import static ru.vyatsu.service.TransformerType.XMLTOJSON;
 
-@Slf4j
 @UtilityClass
 public class ConversionService {
     private final String EXTENSION_XML = ".xml";
