@@ -39,8 +39,8 @@ public class ConversionService {
                 }
                 default -> throw new ConversionException("Несоответствие форматов файла и выбранной операции.");
             }
-        } catch (IOException ioException) {
-            throw new ConversionException("Ошибка при чтении/записи файла или обработке JSON/XML", ioException);
+        } catch (IOException conversionIOException) {
+            throw new ConversionException("Ошибка при чтении/записи файла или обработке JSON/XML", conversionIOException);
         }
     }
 

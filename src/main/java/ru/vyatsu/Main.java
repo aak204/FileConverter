@@ -43,11 +43,11 @@ public class Main {
                 processConversion(inputFile, outputFile, conversionType);
             }
         } catch (Exception exception) {
-            log.error("Произошла ошибка: {}", exception.getMessage());
+            System.err.println("Произошла ошибка" + exception.getMessage());
         }
     }
 
-    private static ConversionType determineConversionType(String inputFile, String outputFile) {
+    private static ConversionType determineConversionType(final String inputFile,final String outputFile) {
         if (ConversionService.isXMLtoJSON(inputFile, outputFile)) {
             return ConversionType.XML_TO_JSON;
         }
@@ -57,7 +57,7 @@ public class Main {
         return ConversionType.INVALID;
     }
 
-    private static void processConversion(String inputFile, String outputFile, ConversionType conversionType) throws ConversionException {
+    private static void processConversion(final String inputFile, final String outputFile, final ConversionType conversionType) throws ConversionException {
         ConversionService.convert(inputFile, outputFile, conversionType);
     }
 }

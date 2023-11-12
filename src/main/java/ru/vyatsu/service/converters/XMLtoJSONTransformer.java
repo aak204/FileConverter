@@ -19,18 +19,15 @@ public class XMLtoJSONTransformer {
     public Brands transform(final GarageXML garageXML) {
         val brandMap = new LinkedHashMap<String, List<CarJSON>>();
 
-        garageXML.getCars().forEach(carXML -> {
-            val car = CarJSON.builder()
-                    .id(carXML.getId())
-                    .type(carXML.getType())
-                    .model(carXML.getModel())
-                    .year(carXML.getYear())
-                    .color(carXML.getColor())
-                    .engine(carXML.getEngine())
-                    .build();
-
-            brandMap.computeIfAbsent(carXML.getBrand(), brand -> new ArrayList<>()).add(car);
-        });
+        garageXML.getCars().forEach(carXML -> brandMap.computeIfAbsent(carXML.getBrand(), brand -> new ArrayList<>())
+                .add(CarJSON.builder()
+                        .id(carXML.getId())
+                        .type(carXML.getType())
+                        .model(carXML.getModel())
+                        .year(carXML.getYear())
+                        .color(carXML.getColor())
+                        .engine(carXML.getEngine())
+                        .build()));
 
         return Brands.builder()
                 .carBrands(brandMap.entrySet().stream()

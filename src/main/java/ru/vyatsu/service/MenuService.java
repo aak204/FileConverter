@@ -19,7 +19,7 @@ public final class MenuService {
                     return choice;
                 }
                 System.out.println("Неверный выбор: " + choice + ". Пожалуйста, выберите 1 или 2");
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException invalidInputException) {
                 System.err.println("Введено некорректное значение. Пожалуйста, введите число.");
                 scanner.nextLine(); // Очищаем сканер
             }
