@@ -1,5 +1,6 @@
 package ru.vyatsu;
 
+import lombok.val;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,25 +16,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 class UserInterfaceTests {
-    private final InputStream systemIn = System.in;
-    private final PrintStream systemOut = System.out;
+    private final InputStream systemIn = in;
+    private final PrintStream systemOut = out;
     private ByteArrayOutputStream testOut;
 
     @BeforeEach
     public void setUpOutput() {
         testOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(testOut));
+        setOut(new PrintStream(testOut));
     }
 
     private void setUpInput(String data) {
-        ByteArrayInputStream testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
+        val testIn = new ByteArrayInputStream(data.getBytes());
+        setIn(testIn);
     }
 
     @AfterEach
     public void restoreSystemInputOutput() {
-        System.setIn(systemIn);
-        System.setOut(systemOut);
+        setIn(systemIn);
+        setOut(systemOut);
     }
 
     @Test
@@ -44,10 +45,10 @@ class UserInterfaceTests {
 
     @Test
     void testGetUserChoiceWithInvalidInput() {
-        String input = "4" + lineSeparator() + "1" + lineSeparator();
+        val input = "4" + lineSeparator() + "1" + lineSeparator();
         setUpInput(input);
         MenuService.getUserChoice();
-        String expectedOutput = "Выберите операцию:" + lineSeparator() +
+        val expectedOutput = "Выберите операцию:" + lineSeparator() +
                 "1. XML в JSON" + lineSeparator() +
                 "2. JSON в XML" + lineSeparator() +
                 "Неверный выбор: 4. Пожалуйста, выберите 1 или 2" + lineSeparator() +

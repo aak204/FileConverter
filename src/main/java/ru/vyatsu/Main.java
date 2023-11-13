@@ -6,6 +6,8 @@ import ru.vyatsu.service.ConversionService;
 import ru.vyatsu.service.ConversionType;
 import ru.vyatsu.service.MenuService;
 
+import static ru.vyatsu.service.ConversionType.*;
+
 /**
  * Главный класс приложения для преобразования данных между форматами XML и JSON.
  * Поддерживает конвертацию XML в JSON и наоборот.
@@ -49,12 +51,12 @@ public class Main {
 
     private static ConversionType determineConversionType(final String inputFile,final String outputFile) {
         if (ConversionService.isXMLtoJSON(inputFile, outputFile)) {
-            return ConversionType.XML_TO_JSON;
+            return XML_TO_JSON;
         }
         if (ConversionService.isJSONtoXML(inputFile, outputFile)) {
-            return ConversionType.JSON_TO_XML;
+            return JSON_TO_XML;
         }
-        return ConversionType.INVALID;
+        return INVALID;
     }
 
     private static void processConversion(final String inputFile, final String outputFile, final ConversionType conversionType) throws ConversionException {

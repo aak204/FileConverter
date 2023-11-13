@@ -2,18 +2,18 @@ package ru.vyatsu;
 
 import org.junit.jupiter.api.Test;
 import ru.vyatsu.service.ConversionService;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
+import static java.nio.file.Files.readString;
+import static java.nio.file.Paths.get;
 import static org.junit.Assert.assertEquals;
 
 class ConversionTests {
     @Test
     void testConvertXMLtoJSONSuccess() throws Exception {
         assertEquals(
-                Files.readString(Paths.get("src/test/resources/data.json")),
+                readString(get("src/test/resources/data.json")),
                 ConversionService.convertXMLtoJSON(
-                        Files.readString(Paths.get("src/test/resources/data.xml"))
+                        readString(get("src/test/resources/data.xml"))
                 )
         );
     }
@@ -21,9 +21,9 @@ class ConversionTests {
     @Test
     void testConvertJSONtoXMLSuccess() throws Exception {
         assertEquals(
-                Files.readString(Paths.get("src/test/resources/data.xml")),
+                readString(get("src/test/resources/data.xml")),
                 ConversionService.convertJSONtoXML(
-                        Files.readString(Paths.get("src/test/resources/data.json"))
+                        readString(get("src/test/resources/data.json"))
                 )
         );
     }
