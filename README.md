@@ -17,7 +17,7 @@
 
 1. **Клонирование репозитория**:
     ```bash
-    git clone https://github.com/your-username/FileConverter.git
+    git clone https://github.com/aak204/FileConverter.git
     cd FileConverter
     ```
 
