@@ -1,18 +1,19 @@
 package ru.vyatsu;
 
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import ru.vyatsu.service.ConversionException;
 import ru.vyatsu.service.ConversionService;
 import ru.vyatsu.service.ConversionType;
 
+import java.nio.file.Paths;
+
 import static java.nio.file.Files.exists;
-import static java.nio.file.Paths.get;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static ru.vyatsu.service.ConversionType.*;
 
 class ErrorHandlingTests {
-    private final String outputFile = "src/test/resources/output.json";
 
     @Test
     void testConversionWithInvalidFormat() {
@@ -39,11 +40,12 @@ class ErrorHandlingTests {
         assertConversionException("src/test/resources/empty.xml", XML_TO_JSON);
     }
 
-    private void assertConversionException(String inputFile, ConversionType conversionType) {
+    private void assertConversionException(final String inputFile,final ConversionType conversionType) {
+        val outputFile = "src/test/resources/output.json";
         assertThrows(ConversionException.class, () ->
                 ConversionService.convert(inputFile, outputFile, conversionType)
         );
 
-        assertFalse("После неудачного преобразования выходной файл не должен существовать.", exists(get(outputFile)));
+        assertFalse("После неудачного преобразования выходной файл не должен существовать.", exists(Paths.get(outputFile)));
     }
 }

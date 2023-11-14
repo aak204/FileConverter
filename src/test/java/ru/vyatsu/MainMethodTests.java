@@ -21,7 +21,7 @@ class MainMethodTests {
         }
 
         try {
-            String[] args = {"src/test/resources/data.xml", outputPath};
+            val args = new String[]{"src/test/resources/data.xml", outputPath};
             Main.main(args);
 
             assertTrue(outputFile.exists(), "Выходной файл не был создан.");
@@ -38,13 +38,10 @@ class MainMethodTests {
         setErr(new PrintStream(errContent));
 
         try {
-            String[] args = {"data.json"};
+            val args = new String[]{"data.json"};
             Main.main(args);
 
-            val expectedError = "Неверное количество аргументов. Для ручного режима не указывайте аргументы, для автоматического используйте 2 аргумента.";
-            val actualError = errContent.toString();
-
-            assertTrue(actualError.contains(expectedError));
+            assertTrue(errContent.toString().contains( "Неверное количество аргументов. Для ручного режима не указывайте аргументы, для автоматического используйте 2 аргумента."));
         } finally {
             setErr(err);
         }

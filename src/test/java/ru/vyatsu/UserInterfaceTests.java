@@ -8,7 +8,6 @@ import ru.vyatsu.service.MenuService;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
 
 import static java.lang.System.*;
@@ -16,8 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 class UserInterfaceTests {
-    private final InputStream systemIn = in;
-    private final PrintStream systemOut = out;
     private ByteArrayOutputStream testOut;
 
     @BeforeEach
@@ -26,15 +23,15 @@ class UserInterfaceTests {
         setOut(new PrintStream(testOut));
     }
 
-    private void setUpInput(String data) {
+    private void setUpInput(final String data) {
         val testIn = new ByteArrayInputStream(data.getBytes());
         setIn(testIn);
     }
 
     @AfterEach
     public void restoreSystemInputOutput() {
-        setIn(systemIn);
-        setOut(systemOut);
+        setIn(System.in);
+        setOut(System.out);
     }
 
     @Test
