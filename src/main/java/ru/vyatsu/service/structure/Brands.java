@@ -20,5 +20,5 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.WRAPPER_OBJECT;
 public class Brands {
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = WRAPPER_OBJECT)
     @JsonProperty("brands")
-    private List<Brand> carBrands; // Список марок
+    List<Brand> carBrands; // Список марок
 }

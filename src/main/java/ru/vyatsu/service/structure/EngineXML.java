@@ -8,5 +8,3 @@ public record EngineXML(
         String volume,
         String power) {
 }
-
-

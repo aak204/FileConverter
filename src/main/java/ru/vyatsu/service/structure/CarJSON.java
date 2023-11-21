@@ -13,10 +13,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CarJSON {
-    private String model; // Модель автомобиля
-    private String year; // Год выпуска
-    private String color; // Цвет
-    private EngineXML engine; // Двигатель
-    private int id; // Идентификатор
-    private String type; // Тип автомобиля
+    String model; // Модель автомобиля
+    String year; // Год выпуска
+    String color; // Цвет
+    EngineXML engine; // Двигатель
+    int id; // Идентификатор
+    String type; // Тип автомобиля
 }

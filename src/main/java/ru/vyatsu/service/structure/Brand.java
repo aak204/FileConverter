@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Brand {
-    private String name; // Название марки
-    private List<CarJSON> cars; // Список моделей автомобилей этой марки
+    String name; // Название марки
+    List<CarJSON> cars; // Список моделей автомобилей этой марки
 }
-

@@ -17,5 +17,5 @@ import lombok.*;
 public class GarageXML {
     @JacksonXmlElementWrapper(useWrapping = false) // Без обертки
     @JacksonXmlProperty(localName = "car")
-    private List<CarXML> cars; // Список автомобилей в гараже
+    List<CarXML> cars; // Список автомобилей в гараже
 }

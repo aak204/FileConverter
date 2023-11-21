@@ -13,12 +13,12 @@ import lombok.*;
 @Builder
 public class CarXML {
     @JacksonXmlProperty(isAttribute = true)
-    private int id; // Идентификатор
+    int id; // Идентификатор
     @JacksonXmlProperty(isAttribute = true)
-    private String type; // Тип автомобиля
-    private String brand; // Марка
-    private String model; // Модель
-    private String year; // Год выпуска
-    private EngineXML engine; // Двигатель
-    private String color; // Цвет
+    String type; // Тип автомобиля
+    String brand; // Марка
+    String model; // Модель
+    String year; // Год выпуска
+    EngineXML engine; // Двигатель
+    String color; // Цвет
 }

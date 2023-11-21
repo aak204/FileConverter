@@ -26,26 +26,18 @@ public class Main {
                 val outputFile = args[1];
 
                 val conversionType = determineConversionType(inputFile, outputFile);
-                if (conversionType == ConversionType.INVALID) {
-                    System.err.println("Неподдерживаемый формат или комбинация файлов.");
-                    return;
-                }
                 processConversion(inputFile, outputFile, conversionType);
             } else {
                 // Интерактивный режим
                 val userChoice = MenuService.getUserChoice();
                 val conversionType = ConversionType.fromInt(userChoice);
-                if (conversionType == ConversionType.INVALID) {
-                    System.err.println("Неверный выбор операции или ошибка ввода.");
-                    return;
-                }
 
                 val inputFile = MenuService.getInputFilePath();
                 val outputFile = MenuService.getOutputFilePath();
                 processConversion(inputFile, outputFile, conversionType);
             }
         } catch (Exception exception) {
-            System.err.println("Произошла ошибка" + exception.getMessage());
+            System.err.printf(exception.getMessage());
         }
     }
 
@@ -53,13 +45,10 @@ public class Main {
         if (ConversionService.isXMLtoJSON(inputFile, outputFile)) {
             return XML_TO_JSON;
         }
-        if (ConversionService.isJSONtoXML(inputFile, outputFile)) {
-            return JSON_TO_XML;
-        }
-        return INVALID;
+        return JSON_TO_XML;
     }
 
     private static void processConversion(final String inputFile, final String outputFile, final ConversionType conversionType) throws ConversionException {
-        ConversionService.convert(inputFile, outputFile, conversionType);
+        ConversionService.getInstance().convert(inputFile, outputFile, conversionType);
     }
 }

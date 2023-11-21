@@ -1,4 +1,4 @@
-package ru.vyatsu.service.converters;
+package ru.vyatsu.service.transformers;
 
 import lombok.experimental.UtilityClass;
 import ru.vyatsu.service.structure.Brands;

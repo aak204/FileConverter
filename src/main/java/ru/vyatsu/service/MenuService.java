@@ -1,13 +1,15 @@
 package ru.vyatsu.service;
 
+import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @UtilityClass
+@FieldDefaults(makeFinal = true)
 public final class MenuService {
-    private final Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
     public int getUserChoice() {
         while (true) {
             System.out.println("Выберите операцию:");
@@ -18,7 +20,7 @@ public final class MenuService {
                 if (choice >= 1 && choice <= 2) {
                     return choice;
                 }
-                System.out.println("Неверный выбор: " + choice + ". Пожалуйста, выберите 1 или 2");
+                System.out.printf("Неверный выбор: %s. Пожалуйста, выберите 1 или 2%n", choice);
             } catch (InputMismatchException invalidInputException) {
                 System.err.println("Введено некорректное значение. Пожалуйста, введите число.");
                 scanner.nextLine(); // Очищаем сканер

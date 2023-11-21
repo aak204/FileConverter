@@ -40,10 +40,10 @@ class ErrorHandlingTests {
         assertConversionException("src/test/resources/empty.xml", XML_TO_JSON);
     }
 
-    private void assertConversionException(final String inputFile,final ConversionType conversionType) {
+    void assertConversionException(final String inputFile,final ConversionType conversionType) {
         val outputFile = "src/test/resources/output.json";
         assertThrows(ConversionException.class, () ->
-                ConversionService.convert(inputFile, outputFile, conversionType)
+                ConversionService.getInstance().convert(inputFile, outputFile, conversionType)
         );
 
         assertFalse("После неудачного преобразования выходной файл не должен существовать.", exists(Paths.get(outputFile)));
