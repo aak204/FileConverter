@@ -18,18 +18,18 @@ public class ConversionService {
 
     private ConversionService() {}
 
-    public void convert(final String inputFile, final String outputFile, final ConversionType conversionType) throws ConversionException {
+    public void convert(final String inputPath, final String outputPath, final ConversionType conversionType) throws ConversionException {
         try {
             Converter converter;
             switch (conversionType) {
                 case XML_TO_JSON -> {
-                    if (!isXMLtoJSON(inputFile, outputFile)) {
+                    if (!isXMLtoJSON(inputPath, outputPath)) {
                         throw new ConversionException("Неверные расширения файлов для конвертации XML в JSON.");
                     }
                     converter = new XMLtoJSONConverter();
                 }
                 case JSON_TO_XML -> {
-                    if (!isJSONtoXML(inputFile, outputFile)) {
+                    if (!isJSONtoXML(inputPath, outputPath)) {
                         throw new ConversionException("Неверные расширения файлов для конвертации JSON в XML.");
                     }
                     converter = new JSONtoXMLConverter();
@@ -37,8 +37,8 @@ public class ConversionService {
                 default -> throw new ConversionException("Несоответствие форматов файла и выбранной операции.");
             }
 
-            try (InputStream inputStream = new FileInputStream(inputFile);
-                 OutputStream outputStream = new FileOutputStream(outputFile)) {
+            try (InputStream inputStream = new FileInputStream(inputPath);
+                 OutputStream outputStream = new FileOutputStream(outputPath)) {
                 converter.convert(inputStream, outputStream);
             }
         } catch (IOException conversionIOException) {
@@ -46,11 +46,11 @@ public class ConversionService {
         }
     }
 
-    public static boolean isXMLtoJSON(final String inputFile, final String outputFile) {
-        return inputFile.endsWith(extensionXml) && outputFile.endsWith(extensionJson);
+    public static boolean isXMLtoJSON(final String inputPath, final String outputFile) {
+        return inputPath.endsWith(extensionXml) && outputFile.endsWith(extensionJson);
     }
 
-    public static boolean isJSONtoXML(final String inputFile, final String outputFile) {
-        return inputFile.endsWith(extensionJson) && outputFile.endsWith(extensionXml);
+    public static boolean isJSONtoXML(final String inputPath, final String outputFile) {
+        return inputPath.endsWith(extensionJson) && outputFile.endsWith(extensionXml);
     }
 }

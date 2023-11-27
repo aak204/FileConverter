@@ -1,11 +1,12 @@
 package ru.vyatsu.service.factory;
 
+import ru.vyatsu.service.structure.GarageXML;
 import ru.vyatsu.service.transformers.JSONtoXMLTransformer;
 import ru.vyatsu.service.structure.Brands;
 
-class JSONtoXMLTransformerFactory implements TransformerFactory {
+class JSONtoXMLTransformerFactory implements TransformerFactory<Brands, GarageXML> {
     @Override
-    public Object transform(final Object input) {
-        return JSONtoXMLTransformer.transform((Brands) input);
+    public GarageXML transform(final Brands input) {
+        return JSONtoXMLTransformer.transform(input);
     }
 }

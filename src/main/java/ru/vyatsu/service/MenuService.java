@@ -20,7 +20,7 @@ public final class MenuService {
                 if (choice >= 1 && choice <= 2) {
                     return choice;
                 }
-                System.out.printf("Неверный выбор: %s. Пожалуйста, выберите 1 или 2%n", choice);
+                System.out.println(String.format("Неверный выбор: %s. Пожалуйста, выберите 1 или 2.", choice));
             } catch (InputMismatchException invalidInputException) {
                 System.err.println("Введено некорректное значение. Пожалуйста, введите число.");
                 scanner.nextLine(); // Очищаем сканер

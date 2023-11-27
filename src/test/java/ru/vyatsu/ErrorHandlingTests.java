@@ -9,8 +9,8 @@ import ru.vyatsu.service.ConversionType;
 import java.nio.file.Paths;
 
 import static java.nio.file.Files.exists;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static ru.vyatsu.service.ConversionType.*;
 
 class ErrorHandlingTests {
@@ -40,12 +40,15 @@ class ErrorHandlingTests {
         assertConversionException("src/test/resources/empty.xml", XML_TO_JSON);
     }
 
-    void assertConversionException(final String inputFile,final ConversionType conversionType) {
+    void assertConversionException(final String inputFile, final ConversionType conversionType) {
         val outputFile = "src/test/resources/output.json";
-        assertThrows(ConversionException.class, () ->
-                ConversionService.getInstance().convert(inputFile, outputFile, conversionType)
-        );
 
-        assertFalse("После неудачного преобразования выходной файл не должен существовать.", exists(Paths.get(outputFile)));
+        assertThatThrownBy(() ->
+                ConversionService.getInstance().convert(inputFile, outputFile, conversionType))
+                .isInstanceOf(ConversionException.class);
+
+        assertThat(exists(Paths.get(outputFile)))
+                .as("После неудачного преобразования выходной файл не должен существовать.")
+                .isFalse();
     }
 }

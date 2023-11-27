@@ -1,14 +1,25 @@
 <GarageXML>
-  <car id="0" type="спортивный">
-    <brand>BMW</brand>
-    <model>M3</model>
+  <car id="4" type="хэтчбек">
+    <brand>Volkswagen</brand>
+    <model>Golf</model>
     <year>2020</year>
     <engine>
-      <type>бензин</type>
-      <volume>3.0</volume>
-      <power>450</power>
+      <type>дизель</type>
+      <volume>2.0</volume>
+      <power>150</power>
     </engine>
-    <color>красный</color>
+    <color>серый</color>
+  </car>
+  <car id="6" type="универсал">
+    <brand>Volvo</brand>
+    <model>V90</model>
+    <year>2021</year>
+    <engine>
+      <type>бензин</type>
+      <volume>2.0</volume>
+      <power>250</power>
+    </engine>
+    <color>синий</color>
   </car>
   <car id="1" type="внедорожник">
     <brand>Toyota</brand>
@@ -21,17 +32,6 @@
     </engine>
     <color>черный</color>
   </car>
-  <car id="2" type="купе">
-    <brand>Mercedes-Benz</brand>
-    <model>CLS 400</model>
-    <year>2022</year>
-    <engine>
-      <type>бензин</type>
-      <volume>3.5</volume>
-      <power>330</power>
-    </engine>
-    <color>синий</color>
-  </car>
   <car id="3" type="седан">
     <brand>Audi</brand>
     <model>A6</model>
@@ -42,17 +42,6 @@
       <power>340</power>
     </engine>
     <color>белый</color>
-  </car>
-  <car id="4" type="хэтчбек">
-    <brand>Volkswagen</brand>
-    <model>Golf</model>
-    <year>2020</year>
-    <engine>
-      <type>дизель</type>
-      <volume>2.0</volume>
-      <power>150</power>
-    </engine>
-    <color>серый</color>
   </car>
   <car id="5" type="кабриолет">
     <brand>Porsche</brand>
@@ -65,14 +54,14 @@
     </engine>
     <color>желтый</color>
   </car>
-  <car id="6" type="универсал">
-    <brand>Volvo</brand>
-    <model>V90</model>
-    <year>2021</year>
+  <car id="2" type="купе">
+    <brand>Mercedes-Benz</brand>
+    <model>CLS 400</model>
+    <year>2022</year>
     <engine>
       <type>бензин</type>
-      <volume>2.0</volume>
-      <power>250</power>
+      <volume>3.5</volume>
+      <power>330</power>
     </engine>
     <color>синий</color>
   </car>
@@ -86,5 +75,16 @@
       <power>200</power>
     </engine>
     <color>черный</color>
+  </car>
+  <car id="0" type="спортивный">
+    <brand>BMW</brand>
+    <model>M3</model>
+    <year>2020</year>
+    <engine>
+      <type>бензин</type>
+      <volume>3.0</volume>
+      <power>450</power>
+    </engine>
+    <color>красный</color>
   </car>
 </GarageXML>

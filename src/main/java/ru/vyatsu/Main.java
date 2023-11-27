@@ -22,33 +22,33 @@ public class Main {
 
             if (args.length == 2) {
                 // Запуск с аргументами командной строки
-                val inputFile = args[0];
-                val outputFile = args[1];
+                val inputPath = args[0];
+                val outputPath = args[1];
 
-                val conversionType = determineConversionType(inputFile, outputFile);
-                processConversion(inputFile, outputFile, conversionType);
+                val conversionType = determineConversionType(inputPath, outputPath);
+                processConversion(inputPath, outputPath, conversionType);
             } else {
                 // Интерактивный режим
                 val userChoice = MenuService.getUserChoice();
                 val conversionType = ConversionType.fromInt(userChoice);
 
-                val inputFile = MenuService.getInputFilePath();
-                val outputFile = MenuService.getOutputFilePath();
-                processConversion(inputFile, outputFile, conversionType);
+                val inputPath = MenuService.getInputFilePath();
+                val outputPath = MenuService.getOutputFilePath();
+                processConversion(inputPath, outputPath, conversionType);
             }
         } catch (Exception exception) {
-            System.err.printf(exception.getMessage());
+            System.err.println(exception.getMessage());
         }
     }
 
-    private static ConversionType determineConversionType(final String inputFile,final String outputFile) {
-        if (ConversionService.isXMLtoJSON(inputFile, outputFile)) {
+    private static ConversionType determineConversionType(final String inputPath,final String outputPath) {
+        if (ConversionService.isXMLtoJSON(inputPath, outputPath)) {
             return XML_TO_JSON;
         }
         return JSON_TO_XML;
     }
 
-    private static void processConversion(final String inputFile, final String outputFile, final ConversionType conversionType) throws ConversionException {
-        ConversionService.getInstance().convert(inputFile, outputFile, conversionType);
+    private static void processConversion(final String inputPath, final String outputPath, final ConversionType conversionType) throws ConversionException {
+        ConversionService.getInstance().convert(inputPath, outputPath, conversionType);
     }
 }
