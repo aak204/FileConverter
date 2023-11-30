@@ -1,5 +1,6 @@
 package ru.vyatsu;
 
+import lombok.val;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,10 +56,10 @@ class UserInterfaceTests {
 
     @Test
     void testGetUserChoiceWithInvalidInput() {
-        String input = "4" + lineSeparator() + "1" + lineSeparator();
+        val input = "4" + lineSeparator() + "1" + lineSeparator();
         setUpInput(input);
         MenuService.getUserChoice();
-        String expectedOutput = "Выберите операцию:" + lineSeparator() +
+        val expectedOutput = "Выберите операцию:" + lineSeparator() +
                 "1. XML в JSON" + lineSeparator() +
                 "2. JSON в XML" + lineSeparator() +
                 "Неверный выбор: 4. Пожалуйста, выберите 1 или 2." + lineSeparator() +

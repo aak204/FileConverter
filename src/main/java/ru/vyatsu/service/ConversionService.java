@@ -2,6 +2,7 @@ package ru.vyatsu.service;
 
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import lombok.val;
 import ru.vyatsu.service.converters.Converter;
 import ru.vyatsu.service.converters.JSONtoXMLConverter;
 import ru.vyatsu.service.converters.XMLtoJSONConverter;
@@ -10,8 +11,8 @@ import java.io.*;
 
 @FieldDefaults(makeFinal = true)
 public class ConversionService {
-    static String extensionXml = ".xml";
-    static String extensionJson = ".json";
+    static String EXTENSIO_NXML = ".xml";
+    static String EXTENSION_JSON = ".json";
 
     @Getter
     static ConversionService instance = new ConversionService();
@@ -20,7 +21,7 @@ public class ConversionService {
 
     public void convert(final String inputPath, final String outputPath, final ConversionType conversionType) throws ConversionException {
         try {
-            Converter converter;
+            Converter<?, ?> converter;
             switch (conversionType) {
                 case XML_TO_JSON -> {
                     if (!isXMLtoJSON(inputPath, outputPath)) {
@@ -37,8 +38,8 @@ public class ConversionService {
                 default -> throw new ConversionException("Несоответствие форматов файла и выбранной операции.");
             }
 
-            try (InputStream inputStream = new FileInputStream(inputPath);
-                 OutputStream outputStream = new FileOutputStream(outputPath)) {
+            try (val inputStream = new FileInputStream(inputPath);
+                 val outputStream = new FileOutputStream(outputPath)) {
                 converter.convert(inputStream, outputStream);
             }
         } catch (IOException conversionIOException) {
@@ -47,10 +48,10 @@ public class ConversionService {
     }
 
     public static boolean isXMLtoJSON(final String inputPath, final String outputFile) {
-        return inputPath.endsWith(extensionXml) && outputFile.endsWith(extensionJson);
+        return inputPath.endsWith(EXTENSIO_NXML) && outputFile.endsWith(EXTENSION_JSON);
     }
 
     public static boolean isJSONtoXML(final String inputPath, final String outputFile) {
-        return inputPath.endsWith(extensionJson) && outputFile.endsWith(extensionXml);
+        return inputPath.endsWith(EXTENSION_JSON) && outputFile.endsWith(EXTENSIO_NXML);
     }
 }
