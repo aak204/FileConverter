@@ -12,19 +12,18 @@ import ru.vyatsu.service.structure.GarageXML;
 public class JSONtoXMLTransformer {
     public GarageXML transform(final Brands brandsJSON) {
         return GarageXML.builder()
-                .cars(brandsJSON.getCarBrands().stream()
-                        .flatMap(brand -> brand.getCars().stream()
-                                .map(car -> CarXML.builder()
-                                        .brand(brand.getName())
-                                        .model(car.getModel())
-                                        .year(car.getYear())
-                                        .color(car.getColor())
-                                        .engine(car.getEngine())
-                                        .id(car.getId())
-                                        .type(car.getType())
-                                        .build()
-                                )
-                        ).toList())
-                .build();
+            .cars(brandsJSON.getCarBrands().stream()
+                .flatMap(brand -> brand.getCars().stream()
+                        .map(car -> CarXML.builder()
+                                .brand(brand.getName())
+                                .model(car.getModel())
+                                .year(car.getYear())
+                                .color(car.getColor())
+                                .engine(car.getEngine())
+                                .id(car.getId())
+                                .type(car.getType())
+                            .build()))
+                .toList())
+            .build();
     }
 }
