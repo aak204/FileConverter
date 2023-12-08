@@ -37,7 +37,7 @@ public class Main {
                 processConversion(inputPath, outputPath, conversionType);
             }
         } catch (Exception exception) {
-            System.err.println(exception.getMessage());
+            System.err.println(String.format("Произошла ошибка: %s - %s", exception.getClass().getSimpleName(), exception.getMessage()));
         }
     }
 

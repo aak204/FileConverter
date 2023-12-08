@@ -19,8 +19,6 @@ public abstract class Converter<T, R> {
     protected abstract void writeValue(final OutputStream outputStream,final R output) throws IOException;
 
     public void convert(final InputStream inputStream, final OutputStream outputStream) throws IOException {
-        T input = readValue(inputStream);
-        R transformed = transform(input);
-        writeValue(outputStream, transformed);
+        writeValue(outputStream, transform(readValue(inputStream)));
     }
 }

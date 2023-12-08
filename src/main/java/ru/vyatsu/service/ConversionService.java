@@ -11,7 +11,7 @@ import java.io.*;
 
 @FieldDefaults(makeFinal = true)
 public class ConversionService {
-    static String EXTENSIO_NXML = ".xml";
+    static String EXTENSION_XML = ".xml";
     static String EXTENSION_JSON = ".json";
 
     @Getter
@@ -43,15 +43,15 @@ public class ConversionService {
                 converter.convert(inputStream, outputStream);
             }
         } catch (IOException conversionIOException) {
-            throw new ConversionException("Ошибка при чтении/записи файла или обработке JSON/XML");
+            throw new ConversionException("Ошибка при чтении/записи файла или обработке JSON/XML", conversionIOException);
         }
     }
 
     public static boolean isXMLtoJSON(final String inputPath, final String outputFile) {
-        return inputPath.endsWith(EXTENSIO_NXML) && outputFile.endsWith(EXTENSION_JSON);
+        return inputPath.endsWith(EXTENSION_XML) && outputFile.endsWith(EXTENSION_JSON);
     }
 
     public static boolean isJSONtoXML(final String inputPath, final String outputFile) {
-        return inputPath.endsWith(EXTENSION_JSON) && outputFile.endsWith(EXTENSIO_NXML);
+        return inputPath.endsWith(EXTENSION_JSON) && outputFile.endsWith(EXTENSION_XML);
     }
 }
