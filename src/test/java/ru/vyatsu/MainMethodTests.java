@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Files;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
@@ -14,7 +15,8 @@ class MainMethodTests {
     void testMainWithCorrectArgs() {
         try {
             val tempOutputPath = Files.createTempFile("test", ".json");
-            val args = new String[]{"src/test/resources/data.xml", tempOutputPath.toString()};
+            val args = new String[]{Objects.requireNonNull(getClass().getResourceAsStream("/data.xml")).toString(),
+                tempOutputPath.toString()};
             Main.main(args);
 
             assertThat(Files.exists(tempOutputPath)).as("Выходной файл не был создан.").isTrue();
