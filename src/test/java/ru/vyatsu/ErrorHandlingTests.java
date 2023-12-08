@@ -6,7 +6,9 @@ import ru.vyatsu.service.ConversionException;
 import ru.vyatsu.service.ConversionService;
 import ru.vyatsu.service.ConversionType;
 
+import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 import static java.nio.file.Files.exists;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,40 +17,44 @@ import static ru.vyatsu.service.ConversionType.*;
 
 class ErrorHandlingTests {
 
-    @Test
-    void testConversionWithInvalidFormat() {
-        assertConversionException("src/test/resources/test.invalid", XML_TO_JSON);
+    private String getPathFromResource(String resourcePath) throws URISyntaxException {
+        return Paths.get(Objects.requireNonNull(getClass().getResource(resourcePath)).toURI()).toString();
     }
 
     @Test
-    void testConversionWithNonExistentInputFile() {
-        assertConversionException("src/test/resources/non_existent.xml", XML_TO_JSON);
+    void testConversionWithInvalidFormat() throws URISyntaxException {
+        assertConversionException(getPathFromResource("/test.invalid"), XML_TO_JSON);
     }
 
     @Test
-    void testConversionWithIncorrectConversionType() {
-        assertConversionException("src/test/resources/data.xml", JSON_TO_XML);
+    void testConversionWithNonExistentInputFile() throws URISyntaxException {
+        assertConversionException(getPathFromResource("/non_existent.xml"), XML_TO_JSON);
     }
 
     @Test
-    void testConversionWithUnsupportedFileFormat() {
-        assertConversionException("src/test/resources/data.txt", JSON_TO_XML);
+    void testConversionWithIncorrectConversionType() throws URISyntaxException {
+        assertConversionException(getPathFromResource("/data.xml"), JSON_TO_XML);
     }
 
     @Test
-    void testConversionWithEmptyInputFile() {
-        assertConversionException("src/test/resources/empty.xml", XML_TO_JSON);
+    void testConversionWithUnsupportedFileFormat() throws URISyntaxException {
+        assertConversionException(getPathFromResource("/data.txt"), JSON_TO_XML);
+    }
+
+    @Test
+    void testConversionWithEmptyInputFile() throws URISyntaxException {
+        assertConversionException(getPathFromResource("/empty.xml"), XML_TO_JSON);
     }
 
     void assertConversionException(final String inputPath, final ConversionType conversionType) {
-        val outputPath = "src/test/resources/output.json";
+        val outputPath = Objects.requireNonNull(getClass().getResourceAsStream("/data.json")).toString();
 
         assertThatThrownBy(() ->
-                ConversionService.getInstance().convert(inputPath, outputPath, conversionType))
-                .isInstanceOf(ConversionException.class);
+            ConversionService.getInstance().convert(inputPath, outputPath, conversionType))
+            .isInstanceOf(ConversionException.class);
 
         assertThat(exists(Paths.get(outputPath)))
-                .as("После неудачного преобразования выходной файл не должен существовать.")
-                .isFalse();
+            .as("После неудачного преобразования выходной файл не должен существовать.")
+            .isFalse();
     }
 }

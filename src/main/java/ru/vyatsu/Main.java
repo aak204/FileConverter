@@ -4,14 +4,10 @@ import lombok.val;
 import ru.vyatsu.service.ConversionException;
 import ru.vyatsu.service.ConversionService;
 import ru.vyatsu.service.ConversionType;
-import ru.vyatsu.service.MenuService;
+import ru.vyatsu.service.MenuInterface;
 
 import static ru.vyatsu.service.ConversionType.*;
 
-/**
- * Главный класс приложения для преобразования данных между форматами XML и JSON.
- * Поддерживает конвертацию XML в JSON и наоборот.
- */
 public class Main {
     public static void main(String[] args) {
         try {
@@ -24,24 +20,23 @@ public class Main {
                 // Запуск с аргументами командной строки
                 val inputPath = args[0];
                 val outputPath = args[1];
-
                 val conversionType = determineConversionType(inputPath, outputPath);
                 processConversion(inputPath, outputPath, conversionType);
             } else {
                 // Интерактивный режим
-                val userChoice = MenuService.getUserChoice();
-                val conversionType = ConversionType.fromInt(userChoice);
-
-                val inputPath = MenuService.getInputFilePath();
-                val outputPath = MenuService.getOutputFilePath();
-                processConversion(inputPath, outputPath, conversionType);
+                val userChoice = MenuInterface.getUserChoice();
+                processConversion(MenuInterface.getInputFilePath(),
+                    MenuInterface.getOutputFilePath(), ConversionType.fromInt(userChoice));
             }
-        } catch (Exception exception) {
-            System.err.println(String.format("Произошла ошибка: %s - %s", exception.getClass().getSimpleName(), exception.getMessage()));
+        } catch (ConversionException conversionException) {
+            System.err.println(String.format("Ошибка конвертации: %s", conversionException.getMessage()));
+        } catch (Exception generalException) {
+            System.err.println(String.format("Необработанная ошибка: %s - %s", generalException.getClass().getSimpleName(),
+                generalException.getMessage()));
         }
     }
 
-    private static ConversionType determineConversionType(final String inputPath,final String outputPath) {
+    private static ConversionType determineConversionType(final String inputPath, final String outputPath) {
         if (ConversionService.isXMLtoJSON(inputPath, outputPath)) {
             return XML_TO_JSON;
         }

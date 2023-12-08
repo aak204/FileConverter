@@ -10,8 +10,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.io.ByteArrayOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 @FieldDefaults(makeFinal = true)
 class ConversionTests {
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -26,7 +25,7 @@ class ConversionTests {
             converter.convert(inputStream, outputStream);
 
             assertThat(objectMapper.readTree(outputStream.toString(UTF_8)))
-                .isEqualTo(objectMapper.readTree(Files.readAllBytes(Paths.get("src/test/resources/data.json"))));
+                .isEqualTo(objectMapper.readTree(getClass().getResourceAsStream("/data.json")));
         }
     }
 
@@ -40,7 +39,7 @@ class ConversionTests {
             converter.convert(inputStream, outputStream);
 
             assertThat(xmlMapper.readTree(outputStream.toString(UTF_8)))
-                .isEqualTo(xmlMapper.readTree(Files.readAllBytes(Paths.get("src/test/resources/data.xml"))));
+                .isEqualTo(xmlMapper.readTree(getClass().getResourceAsStream("/data.xml")));
         }
     }
 }

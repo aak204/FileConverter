@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 @UtilityClass
 @FieldDefaults(makeFinal = true)
-public final class MenuService {
+public final class MenuInterface {
     final Scanner scanner = new Scanner(System.in);
     public int getUserChoice() {
         while (true) {

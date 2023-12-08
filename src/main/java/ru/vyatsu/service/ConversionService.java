@@ -47,11 +47,11 @@ public class ConversionService {
         }
     }
 
-    public static boolean isXMLtoJSON(final String inputPath, final String outputFile) {
-        return inputPath.endsWith(EXTENSION_XML) && outputFile.endsWith(EXTENSION_JSON);
+    public static boolean isXMLtoJSON(final String inputPath, final String outputPath) {
+        return inputPath.endsWith(EXTENSION_XML) && outputPath.endsWith(EXTENSION_JSON);
     }
 
-    public static boolean isJSONtoXML(final String inputPath, final String outputFile) {
-        return inputPath.endsWith(EXTENSION_JSON) && outputFile.endsWith(EXTENSION_XML);
+    public static boolean isJSONtoXML(final String inputPath, final String outputPath) {
+        return inputPath.endsWith(EXTENSION_JSON) && outputPath.endsWith(EXTENSION_XML);
     }
 }

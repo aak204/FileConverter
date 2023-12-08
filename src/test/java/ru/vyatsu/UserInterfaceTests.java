@@ -4,7 +4,7 @@ import lombok.val;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vyatsu.service.MenuService;
+import ru.vyatsu.service.MenuInterface;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -51,14 +51,14 @@ class UserInterfaceTests {
     @Test
     void testGetUserChoiceValidInput() {
         setUpInput("1" + lineSeparator());
-        assertThat(MenuService.getUserChoice()).isEqualTo(1);
+        assertThat(MenuInterface.getUserChoice()).isEqualTo(1);
     }
 
     @Test
     void testGetUserChoiceWithInvalidInput() {
         val input = "4" + lineSeparator() + "1" + lineSeparator();
         setUpInput(input);
-        MenuService.getUserChoice();
+        MenuInterface.getUserChoice();
         val expectedOutput = "Выберите операцию:" + lineSeparator() +
                 "1. XML в JSON" + lineSeparator() +
                 "2. JSON в XML" + lineSeparator() +
