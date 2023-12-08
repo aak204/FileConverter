@@ -9,7 +9,7 @@ import java.util.Scanner;
 @UtilityClass
 @FieldDefaults(makeFinal = true)
 public final class MenuService {
-    Scanner scanner = new Scanner(System.in);
+    final Scanner scanner = new Scanner(System.in);
     public int getUserChoice() {
         while (true) {
             System.out.println("Выберите операцию:");
