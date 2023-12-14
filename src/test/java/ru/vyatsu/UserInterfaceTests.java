@@ -4,12 +4,13 @@ import lombok.val;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vyatsu.service.MenuInterface;
+import ru.vyatsu.service.MenuUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 import static java.lang.System.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,19 +29,16 @@ class UserInterfaceTests {
 
     private void setUpInput(final String data) {
         testIn = new ByteArrayInputStream(data.getBytes());
-        setIn(testIn);
+        Scanner customScanner = new Scanner(testIn);
+        MenuUtils.setScanner(customScanner);
     }
 
     @AfterEach
     public void restoreSystemInputOutput() throws IOException {
-        // Закрываем перенаправленные потоки
-        try {
-            if (testIn != null) {
-                testIn.close();
-            }
-        } finally {
-            setIn(System.in);
+        if (testIn != null) {
+            testIn.close();
         }
+        MenuUtils.setScanner(new Scanner(in));
 
         if (printStreamOut != null) {
             printStreamOut.close();
@@ -51,21 +49,21 @@ class UserInterfaceTests {
     @Test
     void testGetUserChoiceValidInput() {
         setUpInput("1" + lineSeparator());
-        assertThat(MenuInterface.getUserChoice()).isEqualTo(1);
+        assertThat(MenuUtils.getUserChoice()).isEqualTo(1);
     }
 
     @Test
     void testGetUserChoiceWithInvalidInput() {
         val input = "4" + lineSeparator() + "1" + lineSeparator();
         setUpInput(input);
-        MenuInterface.getUserChoice();
+        MenuUtils.getUserChoice();
         val expectedOutput = "Выберите операцию:" + lineSeparator() +
-                "1. XML в JSON" + lineSeparator() +
-                "2. JSON в XML" + lineSeparator() +
-                "Неверный выбор: 4. Пожалуйста, выберите 1 или 2." + lineSeparator() +
-                "Выберите операцию:" + lineSeparator() +
-                "1. XML в JSON" + lineSeparator() +
-                "2. JSON в XML" + lineSeparator();
+            "1. XML в JSON" + lineSeparator() +
+            "2. JSON в XML" + lineSeparator() +
+            "Неверный выбор: 4. Пожалуйста, выберите 1 или 2." + lineSeparator() +
+            "Выберите операцию:" + lineSeparator() +
+            "1. XML в JSON" + lineSeparator() +
+            "2. JSON в XML" + lineSeparator();
         assertThat(testOut.toString()).startsWith(expectedOutput);
     }
 }

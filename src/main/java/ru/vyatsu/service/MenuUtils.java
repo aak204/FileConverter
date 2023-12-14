@@ -8,8 +8,13 @@ import java.util.Scanner;
 
 @UtilityClass
 @FieldDefaults(makeFinal = true)
-public final class MenuInterface {
-    final Scanner scanner = new Scanner(System.in);
+public final class MenuUtils {
+    Scanner scanner = new Scanner(System.in);
+
+    public void setScanner(Scanner newScanner) {
+        scanner = newScanner;
+    }
+
     public int getUserChoice() {
         while (true) {
             System.out.println("Выберите операцию:");

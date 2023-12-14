@@ -2,6 +2,7 @@ package ru.vyatsu.service;
 
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import ru.vyatsu.service.converters.Converter;
 import ru.vyatsu.service.converters.JSONtoXMLConverter;
@@ -10,6 +11,7 @@ import ru.vyatsu.service.converters.XMLtoJSONConverter;
 import java.io.*;
 
 @FieldDefaults(makeFinal = true)
+@Slf4j
 public class ConversionService {
     static String EXTENSION_XML = ".xml";
     static String EXTENSION_JSON = ".json";
@@ -43,6 +45,7 @@ public class ConversionService {
                 converter.convert(inputStream, outputStream);
             }
         } catch (IOException conversionIOException) {
+            log.error("Ошибка при чтении/записи файла или обработке JSON/XML", conversionIOException);
             throw new ConversionException("Ошибка при чтении/записи файла или обработке JSON/XML", conversionIOException);
         }
     }

@@ -1,13 +1,15 @@
 package ru.vyatsu;
 
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import ru.vyatsu.service.ConversionException;
 import ru.vyatsu.service.ConversionService;
 import ru.vyatsu.service.ConversionType;
-import ru.vyatsu.service.MenuInterface;
+import ru.vyatsu.service.MenuUtils;
 
 import static ru.vyatsu.service.ConversionType.*;
 
+@Slf4j
 public class Main {
     public static void main(String[] args) {
         try {
@@ -24,15 +26,17 @@ public class Main {
                 processConversion(inputPath, outputPath, conversionType);
             } else {
                 // Интерактивный режим
-                val userChoice = MenuInterface.getUserChoice();
-                processConversion(MenuInterface.getInputFilePath(),
-                    MenuInterface.getOutputFilePath(), ConversionType.fromInt(userChoice));
+                val userChoice = MenuUtils.getUserChoice();
+                processConversion(MenuUtils.getInputFilePath(),
+                    MenuUtils.getOutputFilePath(), ConversionType.fromInt(userChoice));
             }
         } catch (ConversionException conversionException) {
             System.err.println(String.format("Ошибка конвертации: %s", conversionException.getMessage()));
+            log.error("Ошибка конвертации", conversionException);
         } catch (Exception generalException) {
             System.err.println(String.format("Необработанная ошибка: %s - %s", generalException.getClass().getSimpleName(),
                 generalException.getMessage()));
+            log.error("Необработанная ошибка", generalException);
         }
     }
 
