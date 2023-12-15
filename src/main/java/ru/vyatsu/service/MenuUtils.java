@@ -1,5 +1,6 @@
 package ru.vyatsu.service;
 
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
 import lombok.val;
@@ -9,11 +10,8 @@ import java.util.Scanner;
 @UtilityClass
 @FieldDefaults(makeFinal = true)
 public final class MenuUtils {
-    Scanner scanner = new Scanner(System.in);
-
-    public void setScanner(Scanner newScanner) {
-        scanner = newScanner;
-    }
+    @Setter
+    public Scanner scanner = new Scanner(System.in);
 
     public int getUserChoice() {
         while (true) {

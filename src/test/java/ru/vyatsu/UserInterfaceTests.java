@@ -29,8 +29,7 @@ class UserInterfaceTests {
 
     private void setUpInput(final String data) {
         testIn = new ByteArrayInputStream(data.getBytes());
-        Scanner customScanner = new Scanner(testIn);
-        MenuUtils.setScanner(customScanner);
+        MenuUtils.setScanner(new Scanner(testIn));
     }
 
     @AfterEach
