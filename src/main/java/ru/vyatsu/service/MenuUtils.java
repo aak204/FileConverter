@@ -11,7 +11,7 @@ import java.util.Scanner;
 @FieldDefaults(makeFinal = true)
 public final class MenuUtils {
     @Setter
-    public Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     public int getUserChoice() {
         while (true) {
